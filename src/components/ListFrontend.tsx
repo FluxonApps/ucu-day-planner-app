@@ -1,11 +1,11 @@
 import { HStack, Img, Link, Stack, Text } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
 
-import fluxonLogo from './assets/fluxon-logo.svg';
-import AuthPage from './components/AuthPage.tsx';
-import DashboardPage from './components/DashboardPage.tsx';
-import FirebaseDemo from './components/FirebaseDemo.tsx';
-import MainLayout from './components/layout/MainLayout.tsx';
+import fluxonLogo from '../assets/fluxon-logo.svg';
+import AuthPage from './AuthPage.tsx';
+import DashboardPage from './DashboardPage.tsx';
+import FirebaseDemo from './FirebaseDemo.tsx';
+import MainLayout from './layout/MainLayout.tsx';
 
 export const App = () => {
   return (
