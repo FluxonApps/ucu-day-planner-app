@@ -3,6 +3,9 @@ import { getAuth } from 'firebase/auth';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 
+
+import { UserRelationsDemo } from './UserRelationsDemo';
+
 const auth = getAuth();
 
 const DashboardPage = () => {
@@ -25,6 +28,7 @@ const DashboardPage = () => {
       <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
         Sign out
       </Button>
+      {user && <UserRelationsDemo />}
     </Box>
   );
 };
