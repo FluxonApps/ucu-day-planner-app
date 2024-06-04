@@ -15,7 +15,7 @@ import MainLayout from './layout/MainLayout.tsx';
 
 const auth = getAuth();
 
-const AuthPage = () => {
+const AuthForm = () => {
   const toast = useToast();
 
   const [user] = useAuthState(auth);
@@ -127,4 +127,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default AuthForm;
