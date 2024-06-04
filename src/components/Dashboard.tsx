@@ -9,7 +9,7 @@ import MainLayout from './layout/MainLayout.tsx';
 
 const auth = getAuth();
 
-const DashboardPage = () => {
+const Dashboard = () => {
   const [user, userLoading] = useAuthState(auth);
   const [signOut, isSigningOut] = useSignOut(auth);
 
@@ -39,4 +39,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default Dashboard;
