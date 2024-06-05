@@ -3,6 +3,7 @@ import { HStack, Box, Img, Link, Stack, Text } from '@chakra-ui/react';
 import fluxonLogo from '../assets/fluxon-logo.svg';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
+
 export function TaskList() {
   const tasks = useFetchTaskList();
 
