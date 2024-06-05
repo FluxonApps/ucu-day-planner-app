@@ -1,5 +1,4 @@
 import { Timestamp } from 'firebase/firestore';
-import { DocumentReference } from 'firebase/firestore';
 
 export interface Task {
   name: string;
