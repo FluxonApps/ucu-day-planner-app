@@ -6,7 +6,7 @@ interface CustomBoxProps {
     task: Task;
   }
   
-  const CustomBox: React.FC<CustomBoxProps> = ({ task }) => {
+  const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     const [isChecked, setIsChecked] = useState(task.status);
   
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,4 +59,4 @@ interface CustomBoxProps {
     );
   };
   
-  export default CustomBox;
+  export default TaskBox;
