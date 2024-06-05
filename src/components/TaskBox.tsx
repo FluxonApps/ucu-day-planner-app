@@ -35,7 +35,7 @@ interface CustomBoxProps {
         width="500px"
         height="200px"
         margin="20px"
-        bg={isChecked ? 'rgba(217, 217, 217, 0.5)' : '#D9D9D9'}
+        bg={task.status ? 'rgba(217, 217, 217, 0.5)' : '#D9D9D9'}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -45,7 +45,7 @@ interface CustomBoxProps {
             <Text
               fontSize="24px"
               color="black"
-              textDecoration={isChecked ? 'line-through' : 'none'}
+              textDecoration={task.status ? 'line-through' : 'none'}
             >
               {task.name}
             </Text>
@@ -53,7 +53,7 @@ interface CustomBoxProps {
               {task.deadline?.toDate().toLocaleString()}
             </Text>
           </Box>
-          <Checkbox isChecked={isChecked} onChange={handleCheckboxChange} />
+          <Checkbox isChecked={task.status} onChange={handleCheckboxChange} />
         </Flex>
       </Box>
     );
