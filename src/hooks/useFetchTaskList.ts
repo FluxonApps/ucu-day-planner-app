@@ -14,7 +14,7 @@ export function useFetchTaskList() {
 
   const tasksCollectionRef = collection(db, 'tasks');
 
-  const userTasksCollectionQuery = user && query(tasksCollectionRef, where('uuid', '==', user.uid));
+  const userTasksCollectionQuery = user && query(tasksCollectionRef, where('userId', '==', user.uid));
 
   const [tasksSnapshot] = useCollection(userTasksCollectionQuery as Query<Task>);
 
@@ -22,13 +22,15 @@ export function useFetchTaskList() {
     () =>
       tasksSnapshot?.docs?.map((taskDoc) => {
         const task = taskDoc.data();
-        task.ref = taskDoc.ref;
+        task.id = taskDoc.id;
 
         return task;
       }),
     [tasksSnapshot],
   );
   tasksList?.sort((a, b) => b.importance - a.importance);
+
+  // console.log(tasksList);
 
   return tasksList;
 }
