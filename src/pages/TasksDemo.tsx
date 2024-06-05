@@ -7,7 +7,7 @@ import { Task } from '../models/Task';
 
 import { db } from '../../firebase.config';
 
-export function TasksPageDemo() {
+export function TasksDemo() {
   const [newTask, setNewName] = useState('');
   const [newDeadline, setNewDeadline] = useState<Timestamp | null>(null);
   const [newDescription, setNewDescription] = useState('');
