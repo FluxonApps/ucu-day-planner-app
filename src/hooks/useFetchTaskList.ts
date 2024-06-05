@@ -18,6 +18,7 @@ export function useFetchTaskList() {
 
   const [tasksSnapshot] = useCollection(userTasksCollectionQuery as Query<Task>);
 
+
   var tasksList = useMemo(
     () =>
       tasksSnapshot?.docs?.map((taskDoc) => {
@@ -28,6 +29,7 @@ export function useFetchTaskList() {
       }),
     [tasksSnapshot],
   );
+  
   tasksList?.sort((a, b) => b.importance - a.importance);
 
   return tasksList;
