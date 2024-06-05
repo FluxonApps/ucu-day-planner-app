@@ -7,17 +7,18 @@ import { Task } from '../models/Task';
 
 import { db } from '../../firebase.config';
 import { useMemo } from 'react';
+import { FirestoreError } from 'firebase/firestore';
 
 const auth = getAuth();
 
-export function useFetchTaskList() {
+export function useFetchTaskList(): [Array<Task> | undefined, boolean, FirestoreError | undefined] {
   const [user] = useAuthState(auth);
 
   const tasksCollectionRef = collection(db, 'tasks');
 
   const userTasksCollectionQuery = user && query(tasksCollectionRef, where('userId', '==', user.uid));
 
-  const [tasksSnapshot] = useCollection(userTasksCollectionQuery as Query<Task>);
+  const [tasksSnapshot, loading, error] = useCollection(userTasksCollectionQuery as Query<Task>);
 
   var tasksList = useMemo(
     () =>
@@ -31,5 +32,5 @@ export function useFetchTaskList() {
   );
   tasksList?.sort((a, b) => b.importance - a.importance);
 
-  return tasksList;
+  return [tasksList, loading, error];
 }

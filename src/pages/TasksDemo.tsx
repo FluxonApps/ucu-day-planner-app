@@ -20,8 +20,16 @@ export function TasksDemo() {
   const [user] = useAuthState(auth);
 
 
-  const tasks = useFetchTaskList();
-  console.log(tasks)
+  const [tasks, tasksLoading, tasksError] = useFetchTaskList();
+
+
+  if (tasksLoading) {
+    return <Spinner />;
+  }
+
+  if (tasksError) {
+    return <Box>Error fetching Tasks</Box>;
+  }
 
   const tasksCollectionRef = collection(db, 'tasks');
 
@@ -38,13 +46,6 @@ export function TasksDemo() {
     await deleteDoc(taskDoc);
   };
 
-  // if (tasksLoading) {
-  // return <Spinner />;
-  // }
-
-  // if (tasksError) {
-  // return <Box>Error fetching Tasks</Box>;
-  // }
 
   return (
     <Flex flexDir="column" gap="8" padding="6">
