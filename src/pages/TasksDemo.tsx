@@ -1,13 +1,12 @@
 import { Box, Button, Flex, Heading, Input, Stack, HStack, Spinner } from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp, DocumentReference } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, Timestamp, DocumentReference } from 'firebase/firestore';
 import { useState } from 'react';
 import { Task } from '../models/Task';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
+import { db } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
-import { db } from '../../firebase.config';
 
 
 const auth = getAuth();
@@ -18,25 +17,28 @@ export function TasksDemo() {
   const [newDescription, setNewDescription] = useState('');
   const [newImportance, setNewImportance] = useState(0);
 
-
   const [user] = useAuthState(auth);
+
+
+  const tasks = useFetchTaskList();
+  console.log(tasks)
 
   const tasksCollectionRef = collection(db, 'tasks');
 
-  const tasks = useFetchTaskList();
-
   const createTask = async () => {
-    await addDoc(tasksCollectionRef, { name: String(newTask), deadline: newDeadline, description: newDescription, activated: true, importance: Number(newImportance), status: true, uuid: user?.uid });
+    await addDoc(tasksCollectionRef, { name: String(newTask), deadline: newDeadline, description: newDescription, activated: true, importance: Number(newImportance), status: true, userId: user?.uid });
   };
-  const updateTask = async (taskDoc: DocumentReference, updatedName: string, updatedDescription: string, updatedDeadline: Timestamp) => {
+  const updateTask = async (id: string, updatedName: string, updatedDescription: string, updatedDeadline: Timestamp) => {
+    const taskDoc = doc(db, 'tasks', id);
     const newFields = { name: updatedName, description: updatedDescription, deadline: updatedDeadline };
     await updateDoc(taskDoc, newFields);
   };
-  const deleteTask = async (taskDoc: DocumentReference) => {
+  const deleteTask = async (id: string) => {
+    const taskDoc = doc(db, 'tasks', id);
     await deleteDoc(taskDoc);
   };
 
-  // if (!tasks) {
+  // if (tasksLoading) {
   // return <Spinner />;
   // }
 
@@ -86,17 +88,17 @@ export function TasksDemo() {
       </Flex>
       <Flex gap="4" flexWrap="wrap">
         {tasks &&
-          tasks.map((task: Task) => (
-            <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={task.name}>
+          tasks?.map((task: Task) => (
+            <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={task.id}>
               <Heading>Name: {task.name}</Heading>
               <Heading>Deadline: {task.deadline?.toDate().toLocaleString()}</Heading>
               <Heading>Description: {task.description}</Heading>
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
-                <Button size="sm" colorScheme="green" onClick={() => updateTask(task.ref, task.name, task.description, task.deadline)}>
+                <Button size="sm" colorScheme="green" onClick={() => updateTask(task.id, task.name, task.description, task.deadline)}>
                   Change Task (doesn't really do anything)
                 </Button>
-                <Button size="sm" colorScheme="red" onClick={() => deleteTask(task.ref)}>
+                <Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
                   Delete Task
                 </Button>
               </HStack>

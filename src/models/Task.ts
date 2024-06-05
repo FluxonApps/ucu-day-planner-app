@@ -9,5 +9,5 @@ export interface Task {
   archived: boolean;
   status: boolean;
   userId: string;
-  ref: DocumentReference;
+  id: string;
 }
