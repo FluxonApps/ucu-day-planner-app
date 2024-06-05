@@ -8,6 +8,6 @@ export interface Task {
   deadline: Timestamp;
   archived: boolean;
   status: boolean;
-  uuid: string;
+  userId: string;
   ref: DocumentReference;
 }

@@ -1,5 +1,5 @@
 import { getAuth } from 'firebase/auth';
-import { Query, addDoc, collection, query, where } from 'firebase/firestore';
+import { Query, collection, query, where } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { Task } from '../models/Task';
