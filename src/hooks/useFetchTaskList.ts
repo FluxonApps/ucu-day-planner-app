@@ -1,4 +1,5 @@
 import { getAuth } from 'firebase/auth';
+
 import { Query, collection, query, where } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -29,8 +30,6 @@ export function useFetchTaskList() {
     [tasksSnapshot],
   );
   tasksList?.sort((a, b) => b.importance - a.importance);
-
-  // console.log(tasksList);
 
   return tasksList;
 }
