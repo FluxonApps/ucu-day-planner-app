@@ -5,7 +5,7 @@ export interface Task {
   description: string;
   importance: number;
   deadline: Timestamp;
-  active: boolean;
+  archieved: boolean;
   status: boolean;
   uuid: string;
 }
