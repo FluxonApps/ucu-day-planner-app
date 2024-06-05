@@ -91,7 +91,7 @@ import { db } from '../../firebase.config';
                 <Modal isOpen={isOpenEditing} onClose={onCloseEditing}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalHeader>{user.data().name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                     <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="100%" px="6" py="8">
@@ -100,17 +100,19 @@ import { db } from '../../firebase.config';
                             onChange={(event) => {
                             setNewName(event.target.value);
                             }}
-                            placeholder="Task"
-                            size="sm"
-                        />
+                            placeholder={user.data().name}
+
+                            size="sm">
+
+                        </Input>
                         <Input
                             type="number"
-                            placeholder="Priority"
+                            placeholder={user.data().mark}
                             onChange={(event) => {
                             setNewMark(Number(event.target.value));
                             }}
-                            size="sm"
-                        />
+                            size="sm">
+                        </Input>
                         </VStack>
                     </Flex>
                     </ModalBody>
