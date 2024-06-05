@@ -5,7 +5,7 @@ export interface Task {
   description: string;
   importance: number;
   deadline: Timestamp;
-  archived: boolean;
+  archieved: boolean;
   status: boolean;
   userId: string;
   id: string;
