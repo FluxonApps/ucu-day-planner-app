@@ -1,7 +1,5 @@
 import { HStack, Box, Img, Link, Stack, Text } from '@chakra-ui/react';
-// import { TasksDemo } from '../pages/TasksDemo';
 
-import fluxonLogo from '../assets/fluxon-logo.svg';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
 
