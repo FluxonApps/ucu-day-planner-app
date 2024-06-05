@@ -36,21 +36,42 @@ export function UserRelationsDemo() {
       >
         +
       </Button>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={3}>
+      <SimpleGrid columns={{base: 1, sm: 2, md: 3}} spacing={3} mx={{ base: 4, md: 20 }}>
         {scootersSnapshot?.docs.map((scooterDoc) => {
             const scooter = scooterDoc.data();
 
             return (
-            <Center key={scooterDoc.id}>
-                <br />
-                <Box bg='green' p={0.5} color='white' alignItems='center'  borderRadius='md' boxShadow='md'>
-                <Box as='button' bg='white' w='100%' p={20} color='gray'  borderRadius='md' boxShadow='md'>
+              <Center key={scooterDoc.id} py={2}>
+                <Box 
+                  bg='green' 
+                  color='white' 
+                  borderRadius='md' 
+                  boxShadow='md' 
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={0.5}
+                >
+                  <Box 
+                    bg='white' 
+                    color='gray' 
+                    borderRadius='md' 
+                    boxShadow='md'
+                    flex="1"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    p={4}
+                    textAlign="center"
+                    height="100px" // Adjust the height to your preference
+                  >
                     {scooter.color}
-                
-                    <Checkbox defaultChecked colorScheme='cyan'></Checkbox>
+                    <Checkbox defaultChecked colorScheme='cyan' mt={2}></Checkbox>
+                  </Box>
                 </Box>
-                </Box>
-            </Center>
+              </Center>
             );
         })}
       </SimpleGrid>
