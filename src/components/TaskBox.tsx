@@ -32,8 +32,8 @@ interface CustomBoxProps {
         borderColor={getBorderColor()}
         borderRadius="15px"
         p="20px"
-        width="500px"
-        height="200px"
+        width="100%"
+        height="150px"
         margin="20px"
         bg={task.status ? 'rgba(217, 217, 217, 0.5)' : '#D9D9D9'}
         display="flex"
