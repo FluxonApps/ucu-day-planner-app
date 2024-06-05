@@ -18,6 +18,8 @@ export function TaskList() {
           <Link href="/firebase-demo">Firebase demo</Link>
           <Text>|</Text>
           <Link href="/auth">Authenticate</Link>
+          <Text>|</Text>
+          <Link href="/tasks">Tasks</Link>
         </HStack>
       </Stack>
       {/* End: this should be deleted whenever you're comfortable */}
