@@ -1,6 +1,11 @@
-import { Button, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
-import { Timestamp } from 'firebase/firestore';
+import { Button, HStack, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
+
+import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { db } from '../../firebase.config';
+
+import { Task } from '../models/Task'
 
 export interface TaskFormData {
   name: string;
@@ -13,13 +18,19 @@ interface ITaskForm {
   defaultValues?: TaskFormData;
   onSubmit: (newTask: TaskFormData) => void;
   isUpdate: boolean;
+  task: Task
 }
 
-export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
+export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm) {
   const [name, setName] = useState(defaultValues?.name ?? '');
   const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
   const [description, setDescription] = useState(defaultValues?.description ?? '');
   const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
+
+  const deleteTask = async (id: string) => {
+    const taskDoc = doc(db, 'tasks', id);
+    await deleteDoc(taskDoc);
+  };
 
   return (
     <Stack spacing="3">
@@ -63,20 +74,31 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
           <Radio value="3">High</Radio>
         </Stack>
       </RadioGroup>
-      <Button
-        width="50%"
-        size="sm"
-        colorScheme="green"
-        onClick={() => {
-          onSubmit({ name, deadline, description, importance });
-          setName('');
-          setDeadline(null);
-          setDescription('');
-          setImportance(1);
-        }}
-      >
-        {isUpdate ? 'Update' : 'Add'}
-      </Button>
-    </Stack>
+      <HStack>
+        <Button
+          width="50%"
+          size="sm"
+          colorScheme="green"
+          onClick={() => {
+            onSubmit({ name, deadline, description, importance });
+            setName('');
+            setDeadline(null);
+            setDescription('');
+            setImportance(1);
+          }}
+        >
+          {isUpdate ? 'Update' : 'Add'}
+        </Button>
+
+        {isUpdate ?
+          < Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
+            <DeleteIcon />
+          </Button>
+          :
+          <>
+          </>
+        }
+      </HStack>
+    </Stack >
   );
 }

@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay, Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
 
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -8,8 +8,31 @@ import { Task } from '../models/Task';
 interface CustomBoxProps {
   task: Task;
 }
+import { TaskFormData, TaskForm } from './TaskForm';
 
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [defaultFormValues] = useState<TaskFormData>({
+    name: task.name,
+    deadline: task.deadline,
+    description: task.description,
+    importance: task.importance,
+  });
+
+  const handleUpdateTask = async (newTask: TaskFormData) => {
+    const taskDoc = doc(db, 'tasks', task.id);
+    const newFields = {
+      name: newTask.name,
+      description: newTask.description,
+      deadline: newTask.deadline,
+      importance: newTask.importance,
+    };
+    await updateDoc(taskDoc, newFields);
+    setIsModalOpen(false);
+  };
+
 
   const handleCheckboxChange = async () => {
     const taskDoc = doc(db, 'tasks', task.id);
@@ -20,6 +43,15 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     await updateDoc(taskDoc, newFields);
 
   };
+
+  const handleWrapper = (isCheckbox: boolean) => {
+    if (isCheckbox) {
+      console.log("what's your problem")
+      handleCheckboxChange();
+    } else {
+      setIsModalOpen(true);
+    }
+  }
 
   const getBorderColor = () => {
     switch (task.importance) {
@@ -35,37 +67,50 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
   };
 
   return (
-    <Box
-      border="4px"
-      borderColor={getBorderColor()}
-      borderRadius="30px"
-      p="20px"
-      width="100%"
-      height="200px"
-      bg="background"
-      opacity={task.status ? "50%" : "100%"}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Flex width="80%" alignItems="center" justifyContent="space-between">
-        <Box >
-          <Stack spacing="5">
-            <Text
-              fontSize="24px"
-              color="black"
-              textDecoration={task.status ? 'line-through' : 'none'}
-            >
-              {task.name}
-            </Text>
-            <Text fontSize="18px" color="grey">
-              {task.deadline?.toDate().toLocaleString()}
-            </Text>
-          </Stack>
-        </Box>
-        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
-      </Flex>
-    </Box >
+    <>
+      <Box
+        border="4px"
+        borderColor={getBorderColor()}
+        borderRadius="30px"
+        p="20px"
+        width="100%"
+        height="200px"
+        bg="background"
+        opacity={task.status ? "50%" : "100%"}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        onClick={() => handleWrapper(false)}
+      >
+        <Flex width="80%" alignItems="center" justifyContent="space-between" >
+          <Box >
+            <Stack spacing="5" >
+              <Text
+                fontSize="24px"
+                color="black"
+                textDecoration={task.status ? 'line-through' : 'none'}
+              >
+                {task.name}
+              </Text>
+              <Text fontSize="18px" color="grey">
+                {task.deadline?.toDate().toLocaleString()}
+              </Text>
+            </Stack>
+          </Box>
+          <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={() => handleWrapper(true)} />
+        </Flex>
+      </Box >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update task</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <TaskForm onSubmit={handleUpdateTask} defaultValues={defaultFormValues} isUpdate={true} task={task} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
