@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay, Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
 
 import { updateDoc, doc } from 'firebase/firestore';
@@ -35,6 +35,9 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
 
 
   const handleCheckboxChange = async () => {
+
+
+
     const taskDoc = doc(db, 'tasks', task.id);
 
     const newFields = {
@@ -44,14 +47,10 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
 
   };
 
-  const handleWrapper = (isCheckbox: boolean) => {
-    if (isCheckbox) {
-      console.log("what's your problem")
-      handleCheckboxChange();
-    } else {
-      setIsModalOpen(true);
-    }
+  const handleBoxClick = () => {
+    setIsModalOpen(true);
   }
+
 
   const getBorderColor = () => {
     switch (task.importance) {
@@ -80,9 +79,8 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        onClick={() => handleWrapper(false)}
       >
-        <Flex width="80%" alignItems="center" justifyContent="space-between" >
+        <Flex width="80%" alignItems="center" justifyContent="space-between" onClick={handleBoxClick}>
           <Box >
             <Stack spacing="5" >
               <Text
@@ -97,8 +95,9 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
               </Text>
             </Stack>
           </Box>
-          <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={() => handleWrapper(true)} />
+
         </Flex>
+        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
       </Box >
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
