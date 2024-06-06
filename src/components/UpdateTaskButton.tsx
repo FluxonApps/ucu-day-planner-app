@@ -1,13 +1,13 @@
+import { EditIcon } from '@chakra-ui/icons';
 import { Button, ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay } from '@chakra-ui/react';
 import { updateDoc, doc } from 'firebase/firestore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { db } from '../../firebase.config';
 import { Task } from '../models/Task';
 
-import { EditIcon } from '@chakra-ui/icons';
-
 import { TaskFormData, TaskForm } from './TaskForm';
+
 interface IUpdateTaskButton {
   task: Task;
 }
@@ -15,12 +15,21 @@ interface IUpdateTaskButton {
 export function UpdateTaskButton({ task }: IUpdateTaskButton) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [defaultFormValues] = useState<TaskFormData>({
+  const [defaultFormValues, setDefaultFormValues] = useState<TaskFormData>({
     name: task.name,
     deadline: task.deadline,
     description: task.description,
     importance: task.importance,
   });
+
+  useEffect(() => {
+    setDefaultFormValues({
+      name: task.name,
+      deadline: task.deadline,
+      description: task.description,
+      importance: task.importance,
+    });
+  }, [task]);
 
   const handleUpdateTask = async (newTask: TaskFormData) => {
     const taskDoc = doc(db, 'tasks', task.id);
