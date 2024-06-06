@@ -80,9 +80,9 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
         alignItems="center"
         justifyContent="center"
       >
-        <Flex width="80%" alignItems="center" justifyContent="space-between" onClick={handleBoxClick}>
+        <Flex width="100%" height="100%" alignItems="center" justifyContent="space-between" onClick={handleBoxClick}>
           <Box >
-            <Stack spacing="5" >
+            <Stack spacing="5" paddingLeft="20">
               <Text
                 fontSize="24px"
                 color="black"
@@ -95,9 +95,8 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
               </Text>
             </Stack>
           </Box>
-
         </Flex>
-        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
+        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} paddingRight="20" />
       </Box >
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
