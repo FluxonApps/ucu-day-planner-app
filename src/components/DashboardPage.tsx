@@ -24,15 +24,18 @@ const DashboardPage = () => {
   }
 
   return (
-    <MainLayout>
-      <Box p={6}>
-        <Text>Welcome to your app!</Text>
-        <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
-          Sign out
-        </Button>
-        {user && <UserRelationsDemo />}
-      </Box>
-    </MainLayout>
+    <MainLayout
+    headerContent={
+      <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
+        Sign out
+      </Button>
+    }
+  >
+    <Box p={6}>
+    <Text>Welcome to your app!</Text>
+      {user && <UserRelationsDemo />}
+    </Box>
+  </MainLayout>
   );
 };
 
