@@ -20,7 +20,6 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
   const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
   const [description, setDescription] = useState(defaultValues?.description ?? '');
   const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
-  console.log({ defaultValues, name });
 
   return (
     <Stack spacing="3">

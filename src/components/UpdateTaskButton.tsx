@@ -24,7 +24,12 @@ export function UpdateTaskButton({ task }: IUpdateTaskButton) {
 
   const handleUpdateTask = async (newTask: TaskFormData) => {
     const taskDoc = doc(db, 'tasks', task.id);
-    const newFields = { name: newTask.name, description: newTask.description, deadline: newTask.deadline };
+    const newFields = {
+      name: newTask.name,
+      description: newTask.description,
+      deadline: newTask.deadline,
+      importance: newTask.importance,
+    };
     await updateDoc(taskDoc, newFields);
     setIsModalOpen(false);
   };

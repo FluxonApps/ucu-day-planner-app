@@ -1,51 +1,15 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Input,
-  Stack,
-  HStack,
-  Spinner,
-  ModalFooter,
-  ModalBody,
-  ModalContent,
-  Modal,
-  ModalHeader,
-  ModalCloseButton,
-  ModalOverlay,
-  useDisclosure,
-  VStack,
-  Radio,
-  RadioGroup,
-} from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
-import { useState } from 'react';
+import { Box, Button, Flex, Heading, HStack, Spinner } from '@chakra-ui/react';
+import { deleteDoc, doc } from 'firebase/firestore';
 import { Task } from '../models/Task';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
 import { db } from '../../firebase.config';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { AddTaskButton } from '../components/AddTaskButton';
 import { UpdateTaskButton } from '../components/UpdateTaskButton';
-const auth = getAuth();
-import { BsPencilFill, BsPlusLg } from 'react-icons/bs';
 
 export function TasksDemo() {
-  const [newTask, setNewName] = useState('');
-  const [newDeadline, setNewDeadline] = useState<Timestamp | null>(null);
-  const [newDescription, setNewDescription] = useState('');
-  const [newImportance, setNewImportance] = useState(1);
-
-  const [user] = useAuthState(auth);
-
   const [tasks, tasksLoading, tasksError] = useFetchTaskList();
-
-  const { isOpen: isOpenCreating, onOpen: onOpenCreating, onClose: onCloseCreating } = useDisclosure();
-  const { isOpen: isOpenEditing, onOpen: onOpenEditing, onClose: onCloseEditing } = useDisclosure();
-
   if (tasksLoading) {
     return <Spinner />;
   }
@@ -54,33 +18,6 @@ export function TasksDemo() {
     return <Box>Error fetching Tasks</Box>;
   }
 
-  const tasksCollectionRef = collection(db, 'tasks');
-
-  const createTask = async () => {
-    await addDoc(tasksCollectionRef, {
-      name: String(newTask),
-      deadline: newDeadline,
-      description: newDescription,
-      activated: true,
-      importance: Number(newImportance),
-      status: true,
-      userId: user?.uid,
-    });
-    setNewName('');
-    setNewDeadline(null);
-    setNewDescription('');
-    setNewImportance(1);
-  };
-  const updateTask = async (
-    id: string,
-    updatedName: string,
-    updatedDescription: string,
-    updatedDeadline: Timestamp,
-  ) => {
-    const taskDoc = doc(db, 'tasks', id);
-    const newFields = { name: updatedName, description: updatedDescription, deadline: updatedDeadline };
-    await updateDoc(taskDoc, newFields);
-  };
   const deleteTask = async (id: string) => {
     const taskDoc = doc(db, 'tasks', id);
     await deleteDoc(taskDoc);
