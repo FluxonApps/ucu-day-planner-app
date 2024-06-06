@@ -1,25 +1,46 @@
-import { useState } from 'react';
-import { ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay, Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
-
+import {
+  ModalBody,
+  ModalContent,
+  Modal,
+  ModalHeader,
+  ModalCloseButton,
+  ModalOverlay,
+  Box,
+  Stack,
+  Checkbox,
+  Flex,
+  Text,
+} from '@chakra-ui/react';
 import { updateDoc, doc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+
 import { db } from '../../firebase.config';
 import { Task } from '../models/Task';
+
+import { TaskFormData, TaskForm } from './TaskForm';
 
 interface CustomBoxProps {
   task: Task;
 }
-import { TaskFormData, TaskForm } from './TaskForm';
 
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [defaultFormValues] = useState<TaskFormData>({
+  const [defaultFormValues, setDefaultFormValues] = useState<TaskFormData>({
     name: task.name,
     deadline: task.deadline,
     description: task.description,
     importance: task.importance,
   });
+
+  useEffect(() => {
+    setDefaultFormValues({
+      name: task.name,
+      deadline: task.deadline,
+      description: task.description,
+      importance: task.importance,
+    });
+  }, [task]);
 
   const handleUpdateTask = async (newTask: TaskFormData) => {
     const taskDoc = doc(db, 'tasks', task.id);
@@ -33,24 +54,18 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     setIsModalOpen(false);
   };
 
-
   const handleCheckboxChange = async () => {
-
-
-
     const taskDoc = doc(db, 'tasks', task.id);
 
     const newFields = {
-      status: !task.status
+      status: !task.status,
     };
     await updateDoc(taskDoc, newFields);
-
   };
 
   const handleBoxClick = () => {
     setIsModalOpen(true);
-  }
-
+  };
 
   const getBorderColor = () => {
     switch (task.importance) {
@@ -75,19 +90,15 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
         width="100%"
         height="200px"
         bg="background"
-        opacity={task.status ? "50%" : "100%"}
+        opacity={task.status ? '50%' : '100%'}
         display="flex"
         alignItems="center"
         justifyContent="center"
       >
         <Flex width="100%" height="100%" alignItems="center" justifyContent="space-between" onClick={handleBoxClick}>
-          <Box >
+          <Box>
             <Stack spacing="5" paddingLeft="20">
-              <Text
-                fontSize="24px"
-                color="black"
-                textDecoration={task.status ? 'line-through' : 'none'}
-              >
+              <Text fontSize="24px" color="black" textDecoration={task.status ? 'line-through' : 'none'}>
                 {task.name}
               </Text>
               <Text fontSize="18px" color="grey">
@@ -96,8 +107,14 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             </Stack>
           </Box>
         </Flex>
-        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} paddingRight="20" />
-      </Box >
+        <Checkbox
+          colorScheme="green"
+          size="lg"
+          isChecked={task.status}
+          onChange={handleCheckboxChange}
+          paddingRight="20"
+        />
+      </Box>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
