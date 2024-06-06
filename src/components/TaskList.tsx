@@ -1,8 +1,8 @@
+import TaskBox from './TaskBox';
 import { HStack, Box, Img, Link, Stack, Text, SimpleGrid, Spinner } from '@chakra-ui/react';
 
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
-import TaskBox from './TaskBox.tsx';
 
 export function TaskList() {
   const [tasks, loading, error] = useFetchTaskList();
