@@ -95,20 +95,21 @@ const AuthForm = () => {
   return (
     <MainLayout>
       <Flex w="full" h="full" alignItems="center" justifyContent="space-between" >
-        <Box mx="auto" as="form" onSubmit={handleAuth} >
+        <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth} >
           <Stack spacing={4} w={500} rounded="md" p={8}>
-            <Text fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
-            <Input placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
+            <Text color="text" align="center" fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
+            <Input bg="white" borderRadius="15px" _focusVisible={{ borderWidth: "3px", borderColor: "text" }} placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
             <Input
               placeholder="Password"
               type="password"
               onChange={handlePasswordChange}
-              variant="primary"
+              bg="white" _focusVisible={{ borderWidth: "3px", borderColor: "text" }}
+              borderRadius="15px"
               value={password}
               minLength={6}
               required
             />
-            <Button type="submit" colorScheme="blue" isDisabled={loading} isLoading={loading} color="#22223B">
+            <Button type="submit" bg="text" color="background" _hover={{ bg: "highlight", color: "text" }} isDisabled={loading} isLoading={loading} >
               {showSignIn ? "Login" : "Register"}
             </Button>
             <Button
@@ -118,7 +119,7 @@ const AuthForm = () => {
               variant="link"
               onClick={switchAuthMode}
               isDisabled={loading}
-              color="#22223B"
+              color="text"
             >
               {showSignIn ? 'Create a new account?' : 'Already have an account?'}
             </Button>

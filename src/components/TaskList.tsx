@@ -1,11 +1,19 @@
-import { HStack, Box, Img, Link, Stack, Text } from '@chakra-ui/react';
 import TaskBox from './TaskBox';
+import { HStack, Box, Img, Link, Stack, Text, SimpleGrid, Spinner } from '@chakra-ui/react';
 
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
 
 export function TaskList() {
-  const tasks = useFetchTaskList();
+  const [tasks, loading, error] = useFetchTaskList();
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <Box>Error fetching Tasks</Box>;
+  }
 
   return (
     <>
@@ -22,7 +30,11 @@ export function TaskList() {
       </Stack>
       {/* End: this should be deleted whenever you're comfortable */}
 
-      <Box bg={'orange'}>Task list may go here here</Box>
+      <Box bg={'blue.700'}>
+        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={3} mx={{ base: 4, md: 20 }}>
+          {tasks?.map((task) => <TaskBox task={task} key={task.id}></TaskBox>)}
+        </SimpleGrid>
+      </Box>
     </>
   );
 }
