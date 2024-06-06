@@ -16,9 +16,6 @@ import {
   ModalOverlay,
   useDisclosure,
   VStack,
-  Editable,
-  EditablePreview,
-  EditableInput,
   Radio,
   RadioGroup,
 } from '@chakra-ui/react';
@@ -101,7 +98,7 @@ export function TasksDemo() {
           <ModalCloseButton />
           <ModalBody>
             <VStack flexDir="column" gap={7}>
-              <Box>"Name of the Tasks"</Box>
+              <Heading fontSize={30}>Create a new Task</Heading>
               <Stack spacing="3">
                 <Input
                   onChange={(event) => {
@@ -126,7 +123,7 @@ export function TasksDemo() {
                   }}
                   size="sm"
                 />
-                <Heading fontSize={20}>Choose the level of importance</Heading>
+                <Box>Choose the level of importance:</Box>
                 <RadioGroup
                   onChange={(value) => {
                     setNewImportance(Number(value));
@@ -178,58 +175,48 @@ export function TasksDemo() {
                     <ModalCloseButton />
                     <ModalBody>
                       <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="100%" px="6" py="8">
-                        <VStack spacing="3" align={'left'}>
-                          <Editable
-                            defaultValue="Take some chakra"
-                            border={'1px'}
-                            px={'10px'}
-                            py={'5px'}
-                            borderColor={'gray.300'}
+                        <Stack spacing="3">
+                          <Input
+                            defaultValue={task.name}
+                            onChange={(event) => {
+                              setNewName(event.target.value);
+                            }}
+                            placeholder="Name of Task..."
+                            size="sm"
+                          />
+                          <Input
+                            type="datetime-local"
+                            defaultValue={task.deadline.toDate().toISOString().slice(0, 16)}
+                            onChange={(event) => {
+                              const date = new Date(event.target.value);
+                              const timestamp = Timestamp.fromDate(date);
+                              setNewDeadline(timestamp);
+                            }}
+                            size="sm"
+                          />
+                          <Input
+                            defaultValue={task.description}
+                            placeholder="Description..."
+                            onChange={(event) => {
+                              setNewDescription(event.target.value);
+                            }}
+                            size="sm"
+                          />
+                          <Box>Choose the level of importance:</Box>
+                          <RadioGroup
+                            onChange={(value) => {
+                              setNewImportance(Number(value));
+                            }}
+                            size="sm"
+                            defaultValue={String(task.importance)}
                           >
-                            <EditablePreview />
-                            <EditableInput />
-                          </Editable>
-                          <Editable
-                            defaultValue="Take some chakra"
-                            border={'1px'}
-                            px={'10px'}
-                            py={'5px'}
-                            borderColor={'gray.300'}
-                          >
-                            <EditablePreview />
-                            <EditableInput />
-                          </Editable>
-                          <Editable
-                            defaultValue="Take some chakra"
-                            border={'1px'}
-                            px={'10px'}
-                            py={'5px'}
-                            borderColor={'gray.300'}
-                          >
-                            <EditablePreview />
-                            <EditableInput />
-                          </Editable>
-                          <Editable
-                            defaultValue="Take some chakra"
-                            border={'1px'}
-                            px={'10px'}
-                            py={'5px'}
-                            borderColor={'gray.300'}
-                          >
-                            <EditablePreview />
-                            <EditableInput />
-                          </Editable>
-                          <Editable
-                            defaultValue="Take some chakra"
-                            border={'1px'}
-                            px={'10px'}
-                            py={'5px'}
-                            borderColor={'gray.300'}
-                          >
-                            <EditablePreview />
-                            <EditableInput />
-                          </Editable>
-                        </VStack>
+                            <Stack direction="row">
+                              <Radio value="1">Low</Radio>
+                              <Radio value="2">Medium</Radio>
+                              <Radio value="3">High</Radio>
+                            </Stack>
+                          </RadioGroup>
+                        </Stack>
                       </Flex>
                     </ModalBody>
 
