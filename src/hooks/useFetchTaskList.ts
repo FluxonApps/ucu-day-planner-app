@@ -30,8 +30,13 @@ export function useFetchTaskList(): [Array<Task> | undefined, boolean, Firestore
       }),
     [tasksSnapshot],
   );
-  tasksList?.sort((a, b) => b.importance - a.importance);
-  tasksList?.sort((a, b) => +b.status - +a.status);
+  tasksList?.sort((a, b) => {
+    if (a.status == b.status) {
+      return b.importance - a.importance;
+    } else {
+      return a.status ? 1 : -1;
+    }
+  });
 
   return [tasksList, loading, error];
 }
