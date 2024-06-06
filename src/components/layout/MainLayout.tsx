@@ -15,7 +15,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const theme = useTheme();
 
   return (
-    <Box minHeight="100vh" bg={theme.colors.secondary}>
+    <Box minHeight="100vh" bg={theme.colors.secondary} paddingBottom={'50px'} px='5' pt={'10'}>
       <Flex
         align="center"
         justify="space-between"
