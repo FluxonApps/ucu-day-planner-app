@@ -118,7 +118,7 @@ function useDatePickerStyles() {
       '& .clear-button': {
         position: 'absolute',
         top: '50%',
-        right: '-40px', // Adjust the value to position it properly
+        right: '-40px',
         transform: 'translateY(-50%)',
         zIndex: 2,
       },
@@ -157,9 +157,6 @@ export const DatePicker: FC<DatePickerProps> = ({ value, onChange, onClear }) =>
             timeCaption="Time"
             showTimeSelect={false}
           />
-          {/* <Button className="clear-button" onClick={onClear} size="sm" colorScheme="red">
-            Clear
-          </Button> */}
         </div>
       );
     },

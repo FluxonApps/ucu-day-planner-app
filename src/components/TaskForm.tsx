@@ -1,7 +1,7 @@
 import { Button, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import { Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
-import CustomCalendar from './CustomCalendar'; // adjust the import path as necessary
+import CustomCalendar from './CustomCalendar';
 
 export interface TaskFormData {
   name: string;
