@@ -20,6 +20,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
   const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
   const [description, setDescription] = useState(defaultValues?.description ?? '');
   const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
+  console.log({ defaultValues, name });
 
   return (
     <Stack spacing="3">
@@ -27,6 +28,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
         onChange={(event) => {
           setName(event.target.value);
         }}
+        value={name}
         placeholder="Name of Task..."
         size="sm"
       />
@@ -37,6 +39,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
           const timestamp = Timestamp.fromDate(date);
           setDeadline(timestamp);
         }}
+        value={deadline?.toDate().toLocaleString()}
         size="sm"
       />
       <Input
@@ -44,6 +47,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
         onChange={(event) => {
           setDescription(event.target.value);
         }}
+        value={description}
         size="sm"
       />
       <Heading fontSize={20}>Choose the level of importance</Heading>
@@ -52,7 +56,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
           setImportance(Number(value));
         }}
         size="sm"
-        defaultValue="1"
+        value={`${importance}`}
       >
         <Stack direction="row">
           <Radio value="1">Low</Radio>
