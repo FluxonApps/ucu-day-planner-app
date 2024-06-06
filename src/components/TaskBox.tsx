@@ -56,7 +56,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             </Text>
           </Stack>
         </Box>
-        <Checkbox colorScheme='green' size="lg" onChange={handleCheckboxChange} />
+        <Checkbox colorScheme='green' size="lg" isChecked={isChecked} onChange={handleCheckboxChange} />
       </Flex>
     </Box >
   );
