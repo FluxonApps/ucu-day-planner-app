@@ -10,6 +10,7 @@ import {
   StyleObjectOrFn,
   Text,
   useTheme,
+  Button,
   css as chakraCSS,
 } from '@chakra-ui/react';
 import {
@@ -111,42 +112,55 @@ function useDatePickerStyles() {
           color: 'white',
         },
       },
+      '& .react-datepicker__time-container': {
+        position: 'relative',
+      },
+      '& .clear-button': {
+        position: 'absolute',
+        top: '50%',
+        right: '-40px',
+        transform: 'translateY(-50%)',
+        zIndex: 2,
+      },
     };
     return chakraCSS(defaultStyles)(theme);
   }, [theme]);
 }
 
 export interface DatePickerProps {
-  value: Date;
+  value: Date | null;
   onChange: (date: Date | null) => void;
+  onClear: () => void;
 }
 
-export const DatePicker: FC<DatePickerProps> = ({ value, onChange }) => {
+export const DatePicker: FC<DatePickerProps> = ({ value, onChange, onClear }) => {
   const styles = useDatePickerStyles();
 
   const render = useCallback(
     ({ css }) => {
       return (
-        <ReactDatePicker
-          dateFormat="dd MMMM, yyyy HH:mm"
-          timeFormat="HH:mm"
-          showPopperArrow={false}
-          popperClassName={css({ marginTop: '4px!important' })}
-          calendarClassName={css(styles)}
-          selected={value}
-          onChange={(date: Date | (Date | null)[] | null) =>
-            Array.isArray(date) ? onChange(date[0]) : onChange(date)
-          }
-          customInput={<CustomInput />}
-          renderCustomHeader={CustomHeader}
-          showTimeInput
-          timeIntervals={15}
-          timeCaption="Time"
-          showTimeSelect={false}
-        />
+        <div style={{ position: 'relative' }}>
+          <ReactDatePicker
+            dateFormat="dd MMMM, yyyy HH:mm"
+            timeFormat="HH:mm"
+            showPopperArrow={false}
+            popperClassName={css({ marginTop: '4px!important' })}
+            calendarClassName={css(styles)}
+            selected={value}
+            onChange={(date: Date | (Date | null)[] | null) =>
+              Array.isArray(date) ? onChange(date[0]) : onChange(date)
+            }
+            customInput={<CustomInput />}
+            renderCustomHeader={CustomHeader}
+            showTimeInput
+            timeIntervals={15}
+            timeCaption="Time"
+            showTimeSelect={false}
+          />
+        </div>
       );
     },
-    [styles, value, onChange]
+    [styles, value, onChange, onClear]
   );
 
   return <ClassNames>{render}</ClassNames>;
