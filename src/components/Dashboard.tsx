@@ -3,6 +3,8 @@ import { getAuth } from 'firebase/auth';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 
+import MainLayout from './layout/MainLayout.tsx';
+
 const auth = getAuth();
 
 const Dashboard = () => {
@@ -20,12 +22,16 @@ const Dashboard = () => {
   }
 
   return (
-    <Box p={6}>
-      <Text>Welcome to your app!</Text>
+    <MainLayout
+    headerContent={
       <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
         Sign out
       </Button>
-    </Box>
+    }>
+      <Box p={6}>
+        <Text>Welcome to your app!</Text>
+      </Box>
+    </MainLayout>
   );
 };
 

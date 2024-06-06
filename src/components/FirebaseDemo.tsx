@@ -5,6 +5,8 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '../../firebase.config';
 
+import MainLayout from './layout/MainLayout.tsx';
+
 interface User {
   id: string;
   name: string;
@@ -42,47 +44,49 @@ export function FirebaseDemo() {
   }
 
   return (
-    <Flex flexDir="column" gap="8" padding="6">
-      <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="20%" px="6" py="8">
-        <Stack spacing="3">
-          <Input
-            onChange={(event) => {
-              setNewName(event.target.value);
-            }}
-            placeholder="Name..."
-            size="sm"
-          />
-          <Input
-            type="number"
-            placeholder="Mark..."
-            onChange={(event) => {
-              setNewMark(Number(event.target.value));
-            }}
-            size="sm"
-          />
-        </Stack>
-        <Button width="50%" size="sm" colorScheme="green" onClick={createUser}>
-          Create User
-        </Button>
+    <MainLayout>
+      <Flex flexDir="column" gap="8" padding="6">
+        <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="20%" px="6" py="8">
+          <Stack spacing="3">
+            <Input
+              onChange={(event) => {
+                setNewName(event.target.value);
+              }}
+              placeholder="Name..."
+              size="sm"
+            />
+            <Input
+              type="number"
+              placeholder="Mark..."
+              onChange={(event) => {
+                setNewMark(Number(event.target.value));
+              }}
+              size="sm"
+            />
+          </Stack>
+          <Button width="50%" size="sm" colorScheme="green" onClick={createUser}>
+            Create User
+          </Button>
+        </Flex>
+        <Flex gap="4" flexWrap="wrap">
+          {users &&
+            users.docs.map((user) => (
+              <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={user.id}>
+                <Heading>Name: {user.data().name}</Heading>
+                <Heading>Mark: {user.data().mark}</Heading>
+                <HStack gap="4" mt="4">
+                  <Button size="sm" colorScheme="green" onClick={() => updateUser(user.id, user.data().mark)}>
+                    Increase Mark
+                  </Button>
+                  <Button size="sm" colorScheme="red" onClick={() => deleteUser(user.id)}>
+                    Delete User
+                  </Button>
+                </HStack>
+              </Box>
+            ))}
+        </Flex>
       </Flex>
-      <Flex gap="4" flexWrap="wrap">
-        {users &&
-          users.docs.map((user) => (
-            <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={user.id}>
-              <Heading>Name: {user.data().name}</Heading>
-              <Heading>Mark: {user.data().mark}</Heading>
-              <HStack gap="4" mt="4">
-                <Button size="sm" colorScheme="green" onClick={() => updateUser(user.id, user.data().mark)}>
-                  Increase Mark
-                </Button>
-                <Button size="sm" colorScheme="red" onClick={() => deleteUser(user.id)}>
-                  Delete User
-                </Button>
-              </HStack>
-            </Box>
-          ))}
-      </Flex>
-    </Flex>
+    </MainLayout>
   );
 }
 
