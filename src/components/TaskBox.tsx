@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
 
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase.config';
 import { Task } from '../models/Task';
 
 interface CustomBoxProps {
@@ -8,10 +10,15 @@ interface CustomBoxProps {
 }
 
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
-  const [isChecked, setIsChecked] = useState(task.status);
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+  const handleCheckboxChange = async () => {
+    const taskDoc = doc(db, 'tasks', task.id);
+
+    const newFields = {
+      status: !task.status
+    };
+    await updateDoc(taskDoc, newFields);
+
   };
 
   const getBorderColor = () => {
@@ -23,7 +30,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
       case 3:
         return 'warning';
       default:
-        return 'red';
+        return 'background';
     }
   };
 
@@ -36,7 +43,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
       width="100%"
       height="200px"
       bg="background"
-      opacity={isChecked ? "50%" : "100%"}
+      opacity={task.status ? "50%" : "100%"}
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -47,7 +54,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             <Text
               fontSize="24px"
               color="black"
-              textDecoration={isChecked ? 'line-through' : 'none'}
+              textDecoration={task.status ? 'line-through' : 'none'}
             >
               {task.name}
             </Text>
@@ -56,7 +63,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             </Text>
           </Stack>
         </Box>
-        <Checkbox colorScheme='green' size="lg" isChecked={isChecked} onChange={handleCheckboxChange} />
+        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
       </Flex>
     </Box >
   );

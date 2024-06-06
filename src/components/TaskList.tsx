@@ -1,5 +1,5 @@
 import TaskBox from './TaskBox';
-import { HStack, Box, Img, Link, Stack, Text, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner } from '@chakra-ui/react';
 
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
