@@ -1,3 +1,4 @@
+import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -19,22 +20,31 @@ import {
   Radio,
   RadioGroup,
 } from '@chakra-ui/react';
+import { getAuth } from 'firebase/auth';
 import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
-import { Task } from '../models/Task';
-import { useFetchTaskList } from '../hooks/useFetchTaskList';
-
-import { db } from '../../firebase.config';
-import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const auth = getAuth();
-import { AddIcon } from '@chakra-ui/icons';
+import { db } from '../../firebase.config';
+import { useFetchTaskList } from '../hooks/useFetchTaskList';
+import { Task } from '../models/Task';
 
 import { TaskFormData, TaskForm } from './TaskForm';
 
-export function UpdateTask() {
+const auth = getAuth();
+
+interface IUpdateTaskButton {
+  task: Task;
+}
+
+export function UpdateTaskButton({ task }: IUpdateTaskButton) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [defaultFormValues] = useState<TaskFormData>({
+    name: task.name,
+    deadline: task.deadline,
+    description: task.description,
+    importance: task.importance,
+  });
   // Declaring adding task business logic here
   const handleUpdateTask = (newTask: TaskFormData) => {
     // save an updated task to Firestore
@@ -43,14 +53,16 @@ export function UpdateTask() {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>Pencil icon</Button>
+      <Button bgColor="white" size="xs" fontSize={'2xl'} onClick={() => setIsModalOpen(true)}>
+        ✎
+      </Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add new task</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <TaskForm onSubmit={handleUodateTask} />
+            <TaskForm onSubmit={handleUpdateTask} defaultValues={defaultFormValues} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -10,14 +10,15 @@ export interface TaskFormData {
 }
 
 interface ITaskForm {
+  defaultValues?: TaskFormData;
   onSubmit: (newTask: TaskFormData) => void;
 }
 
-export function TaskForm({ onSubmit }: ITaskForm) {
-  const [name, setName] = useState('');
-  const [deadline, setDeadline] = useState<Timestamp | null>(null);
-  const [description, setDescription] = useState('');
-  const [importance, setImportance] = useState(1);
+export function TaskForm({ onSubmit, defaultValues }: ITaskForm) {
+  const [name, setName] = useState(defaultValues?.name ?? '');
+  const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
+  const [description, setDescription] = useState(defaultValues?.description ?? '');
+  const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
 
   return (
     <Stack spacing="3">

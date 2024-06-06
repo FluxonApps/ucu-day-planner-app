@@ -1,3 +1,4 @@
+import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -19,17 +20,17 @@ import {
   Radio,
   RadioGroup,
 } from '@chakra-ui/react';
+import { getAuth } from 'firebase/auth';
 import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
-import { Task } from '../models/Task';
-import { useFetchTaskList } from '../hooks/useFetchTaskList';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { UpdateTaskButton } from 'src/components/UpdateTaskButton';
 
 import { db } from '../../firebase.config';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useFetchTaskList } from '../hooks/useFetchTaskList';
+import { Task } from '../models/Task';
 
 const auth = getAuth();
-import { AddIcon } from '@chakra-ui/icons';
 
 export function TasksDemo() {
   const [newTask, setNewName] = useState('');
@@ -69,6 +70,7 @@ export function TasksDemo() {
     setNewDescription('');
     setNewImportance(1);
   };
+
   const updateTask = async (
     id: string,
     updatedName: string,
@@ -79,6 +81,7 @@ export function TasksDemo() {
     const newFields = { name: updatedName, description: updatedDescription, deadline: updatedDeadline };
     await updateDoc(taskDoc, newFields);
   };
+
   const deleteTask = async (id: string) => {
     const taskDoc = doc(db, 'tasks', id);
     await deleteDoc(taskDoc);
@@ -158,16 +161,14 @@ export function TasksDemo() {
       </Modal>
       <Flex gap="4" flexWrap="wrap">
         {tasks &&
-          tasks?.map((task: Task) => (
+          tasks.map((task: Task) => (
             <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={task.id}>
               <Heading>Name: {task.name}</Heading>
-              <Heading>Deadline: {task.deadline?.toDate().toLocaleString()}</Heading>
+              <Heading>Deadline: {task.deadline.toDate().toLocaleString()}</Heading>
               <Heading>Description: {task.description}</Heading>
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
-                <Button bgColor="white" size="xs" fontSize={'2xl'} onClick={onOpenEditing} key={task.id}>
-                  ✎
-                </Button>
+                <UpdateTaskButton key={task.id} task={task} />
                 <Modal isOpen={isOpenEditing} onClose={onCloseEditing}>
                   <ModalOverlay />
                   <ModalContent>
@@ -186,7 +187,7 @@ export function TasksDemo() {
                           />
                           <Input
                             type="datetime-local"
-                            defaultValue={task.deadline?.toDate().toISOString().slice(0, 16)}
+                            defaultValue={task.deadline.toDate().toISOString().slice(0, 16)}
                             onChange={(event) => {
                               const date = new Date(event.target.value);
                               const timestamp = Timestamp.fromDate(date);
