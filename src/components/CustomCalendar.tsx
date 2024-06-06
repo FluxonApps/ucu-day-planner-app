@@ -1,26 +1,36 @@
-import { useState } from 'react';
-import { Box } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { DatePicker } from './DatePicker';
+import { Button, Stack } from '@chakra-ui/react';
 
-const CustomCalendar = () => {
-  const [newDeadline, setNewDeadline] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const CustomCalendar = ({ selectedDate, onDateChange }) => {
+  const [internalDate, setInternalDate] = useState(selectedDate ? new Date(selectedDate) : null);
 
-  const handleDateChange = (date: React.SetStateAction<Date>) => {
-    setSelectedDate(date);
+  useEffect(() => {
+    setInternalDate(selectedDate ? new Date(selectedDate) : null);
+  }, [selectedDate]);
+
+  const handleDateChange = (date) => {
     const timestamp = date ? Timestamp.fromDate(date) : null;
-    console.log(date);
-    console.log(timestamp);
+    setInternalDate(date);
+    onDateChange(timestamp);
+  };
 
-    setNewDeadline(timestamp);
-    console.log(newDeadline);
+  const handleClearDate = () => {
+    setInternalDate(null);
+    onDateChange(null);
   };
 
   return (
-    <Box p={4}>
-      <DatePicker value={selectedDate} onChange={handleDateChange} />
-    </Box>
+    <Stack direction="row" align="center">
+      <DatePicker
+        value={internalDate}
+        onChange={handleDateChange}
+      />
+      <Button onClick={handleClearDate} size="sm" bg="secondarytext" color="white" _hover={{ bg: "secondary", color: "secondarytext" }}>
+        Clear
+      </Button>
+    </Stack>
   );
 };
 

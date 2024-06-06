@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay, Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
 
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 import { Task } from '../models/Task';
 
@@ -65,6 +65,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     }
   };
 
+
   return (
     <>
       <Box
@@ -90,7 +91,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
               >
                 {task.name}
               </Text>
-              <Text fontSize="18px" color="grey">
+              <Text fontSize="18px" color={Timestamp.fromDate(new Date()) > task.deadline ? "warning" : "grey"} decoration={Timestamp.fromDate(new Date()) > task.deadline ? "underline" : "none"}>
                 {task.deadline?.toDate().toLocaleString()}
               </Text>
             </Stack>
