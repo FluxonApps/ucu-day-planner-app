@@ -28,6 +28,8 @@ import { db } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+import { AddTaskButton } from '../components/AddTaskButton';
+import { UpdateTaskButton } from '../components/UpdateTaskButton';
 const auth = getAuth();
 import { BsPencilFill, BsPlusLg } from 'react-icons/bs';
 
@@ -87,75 +89,8 @@ export function TasksDemo() {
   return (
     <Flex flexDir="column" gap="8" padding="6">
       <Box textAlign={'right'}>
-        <Button bg="gainsboro" onClick={onOpenCreating}>
-          {<BsPlusLg />}
-        </Button>
+        <AddTaskButton />
       </Box>
-      <Modal isOpen={isOpenCreating} onClose={onCloseCreating}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack flexDir="column" gap={7}>
-              <Heading fontSize={30}>Create a new Task</Heading>
-              <Stack spacing="3">
-                <Input
-                  onChange={(event) => {
-                    setNewName(event.target.value);
-                  }}
-                  placeholder="Name of Task..."
-                  size="sm"
-                />
-                <Input
-                  type="datetime-local"
-                  onChange={(event) => {
-                    const date = new Date(event.target.value);
-                    const timestamp = Timestamp.fromDate(date);
-                    setNewDeadline(timestamp);
-                  }}
-                  size="sm"
-                />
-                <Input
-                  placeholder="Description..."
-                  onChange={(event) => {
-                    setNewDescription(event.target.value);
-                  }}
-                  size="sm"
-                />
-                <Box>Choose the level of importance:</Box>
-                <RadioGroup
-                  onChange={(value) => {
-                    setNewImportance(Number(value));
-                  }}
-                  size="sm"
-                  defaultValue="1"
-                >
-                  <Stack direction="row">
-                    <Radio value="1">Low</Radio>
-                    <Radio value="2">Medium</Radio>
-                    <Radio value="3">High</Radio>
-                  </Stack>
-                </RadioGroup>
-              </Stack>
-
-              <Button
-                width="50%"
-                size="sm"
-                colorScheme="green"
-                onClick={() => {
-                  createTask();
-                  onCloseCreating();
-                }}
-              >
-                Create Task
-              </Button>
-            </VStack>
-          </ModalBody>
-
-          <ModalFooter></ModalFooter>
-        </ModalContent>
-      </Modal>
       <Flex gap="4" flexWrap="wrap">
         {tasks &&
           tasks?.map((task: Task) => (
@@ -165,68 +100,7 @@ export function TasksDemo() {
               <Heading>Description: {task.description}</Heading>
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
-                <Button bgColor="white" size="xs" fontSize={'2xl'} onClick={onOpenEditing} key={task.id}>
-                  <BsPencilFill />
-                </Button>
-                <Modal isOpen={isOpenEditing} onClose={onCloseEditing}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader> Editing</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="100%" px="6" py="8">
-                        <Stack spacing="3">
-                          <Input
-                            defaultValue={task.name}
-                            onChange={(event) => {
-                              setNewName(event.target.value);
-                            }}
-                            placeholder="Name of Task..."
-                            size="sm"
-                          />
-                          <Input
-                            type="datetime-local"
-                            defaultValue={task.deadline?.toDate().toISOString().slice(0, 16)}
-                            onChange={(event) => {
-                              const date = new Date(event.target.value);
-                              const timestamp = Timestamp.fromDate(date);
-                              setNewDeadline(timestamp);
-                            }}
-                            size="sm"
-                          />
-                          <Input
-                            defaultValue={task.description}
-                            placeholder="Description..."
-                            onChange={(event) => {
-                              setNewDescription(event.target.value);
-                            }}
-                            size="sm"
-                          />
-                          <Box>Choose the level of importance:</Box>
-                          <RadioGroup
-                            onChange={(value) => {
-                              setNewImportance(Number(value));
-                            }}
-                            size="sm"
-                            defaultValue={String(task.importance)}
-                          >
-                            <Stack direction="row">
-                              <Radio value="1">Low</Radio>
-                              <Radio value="2">Medium</Radio>
-                              <Radio value="3">High</Radio>
-                            </Stack>
-                          </RadioGroup>
-                        </Stack>
-                      </Flex>
-                    </ModalBody>
-
-                    <ModalFooter>
-                      <Button width="30%" size="sm" colorScheme="green" onClick={updateTask}>
-                        Edit Task
-                      </Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
+                <UpdateTaskButton task={task} />
                 <Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
                   Delete Task
                 </Button>

@@ -10,14 +10,16 @@ export interface TaskFormData {
 }
 
 interface ITaskForm {
+  defaultValues?: TaskFormData;
   onSubmit: (newTask: TaskFormData) => void;
+  isUpdate: boolean;
 }
 
-export function TaskForm({ onSubmit }: ITaskForm) {
-  const [name, setName] = useState('');
-  const [deadline, setDeadline] = useState<Timestamp | null>(null);
-  const [description, setDescription] = useState('');
-  const [importance, setImportance] = useState(1);
+export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
+  const [name, setName] = useState(defaultValues?.name ?? '');
+  const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
+  const [description, setDescription] = useState(defaultValues?.description ?? '');
+  const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
 
   return (
     <Stack spacing="3">
@@ -58,7 +60,6 @@ export function TaskForm({ onSubmit }: ITaskForm) {
           <Radio value="3">High</Radio>
         </Stack>
       </RadioGroup>
-
       <Button
         width="50%"
         size="sm"
@@ -71,7 +72,7 @@ export function TaskForm({ onSubmit }: ITaskForm) {
           setImportance(1);
         }}
       >
-        Create Task
+        {isUpdate ? 'Update' : 'Add'}
       </Button>
     </Stack>
   );
