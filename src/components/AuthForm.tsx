@@ -16,7 +16,7 @@ const auth = getAuth();
 const AuthForm = () => {
   const toast = useToast();
 
-  const [user] = useAuthState(auth);
+  const [user, isAuthLoading] = useAuthState(auth);
   const [signInWithEmailAndPassword, , signInLoading] = useSignInWithEmailAndPassword(auth);
   const [createUserWithEmailAndPassword, , signUpLoading] = useCreateUserWithEmailAndPassword(auth);
   const loading = signInLoading || signUpLoading;
@@ -86,29 +86,55 @@ const AuthForm = () => {
   };
 
   // Check if user is already signed in. If yes, redirect to main app.
-  if (user) {
+  if (user && !isAuthLoading) {
     return <Navigate to="/" replace />;
   }
 
   return (
     <Box h="full" bg="highlight">
-      <Flex w="full" h="full" alignItems="center" justifyContent="space-between" >
-        <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth} >
+      <Flex w="full" h="full" alignItems="center" justifyContent="space-between">
+        <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth}>
           <Stack spacing={4} w={500} rounded="md" p={8}>
-            <Text color="text" align="center" fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
-            <Input bg="white" borderRadius="15px" _focusVisible={{ borderWidth: "3px", borderColor: "text" }} placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
+            <Text color="text" align="center" fontSize="2xl">
+              {showSignIn ? 'Sign in' : 'Sign up'}
+            </Text>
+            <Input
+              bg="white"
+              borderRadius="15px"
+              _focusVisible={{ borderWidth: '3px', borderColor: 'text' }}
+              placeholder="Email"
+              type="email"
+              onChange={handleEmailChange}
+              value={email}
+              required
+            />
             <Input
               placeholder="Password"
               type="password"
               onChange={handlePasswordChange}
-              bg="white" _focusVisible={{ borderWidth: "3px", borderColor: "text" }}
+              bg="white"
+              _focusVisible={{ borderWidth: '3px', borderColor: 'text' }}
               borderRadius="15px"
               value={password}
               minLength={6}
               required
             />
-            <Button type="submit" bg="secondarytext" borderRadius="15px" color="background" _hover={{ bg: "background", color: "secondarytext", border: "2px", borderColor: "secondary", transform: "scale(1.02)" }} isDisabled={loading} isLoading={loading} >
-              {showSignIn ? "Login" : "Register"}
+            <Button
+              type="submit"
+              bg="secondarytext"
+              borderRadius="15px"
+              color="background"
+              _hover={{
+                bg: 'background',
+                color: 'secondarytext',
+                border: '2px',
+                borderColor: 'secondary',
+                transform: 'scale(1.02)',
+              }}
+              isDisabled={loading}
+              isLoading={loading}
+            >
+              {showSignIn ? 'Login' : 'Register'}
             </Button>
             <Button
               mt={4}
