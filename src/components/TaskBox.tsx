@@ -10,16 +10,12 @@ interface CustomBoxProps {
 }
 
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
-  const [isChecked, setIsChecked] = useState(task.status);
 
   const handleCheckboxChange = () => {
-    console.log(isChecked);
     const taskDoc = doc(db, 'tasks', task.id);
-    setIsChecked(!isChecked);
 
-    console.log(isChecked);
     const newFields = {
-      status: isChecked
+      status: !task.status
     };
     updateDoc(taskDoc, newFields);
 
@@ -47,7 +43,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
       width="100%"
       height="200px"
       bg="background"
-      opacity={isChecked ? "50%" : "100%"}
+      opacity={task.status ? "50%" : "100%"}
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -58,7 +54,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             <Text
               fontSize="24px"
               color="black"
-              textDecoration={isChecked ? 'line-through' : 'none'}
+              textDecoration={task.status ? 'line-through' : 'none'}
             >
               {task.name}
             </Text>
@@ -67,7 +63,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             </Text>
           </Stack>
         </Box>
-        <Checkbox colorScheme='green' size="lg" isChecked={isChecked} onChange={handleCheckboxChange} />
+        <Checkbox colorScheme='green' size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
       </Flex>
     </Box >
   );
