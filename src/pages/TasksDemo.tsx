@@ -16,22 +16,11 @@ import {
   ModalOverlay,
   useDisclosure,
   VStack,
-  useEditableControls,
   Editable,
   EditablePreview,
   EditableInput,
 } from '@chakra-ui/react';
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  CollectionReference,
-  Timestamp,
-  DocumentReference,
-} from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import { Task } from '../models/Task';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
@@ -52,6 +41,9 @@ export function TasksDemo() {
   const [user] = useAuthState(auth);
 
   const [tasks, tasksLoading, tasksError] = useFetchTaskList();
+
+  const { isOpen: isOpenCreating, onOpen: onOpenCreating, onClose: onCloseCreating } = useDisclosure();
+  const { isOpen: isOpenEditing, onOpen: onOpenEditing, onClose: onCloseEditing } = useDisclosure();
 
   if (tasksLoading) {
     return <Spinner />;
@@ -88,14 +80,6 @@ export function TasksDemo() {
     const taskDoc = doc(db, 'tasks', id);
     await deleteDoc(taskDoc);
   };
-
-  if (tasksLoading) {
-    return <Spinner />;
-  }
-  const EditTask = async (id: string, name: string, prorities: number, description: string, deadline: Timestamp) => {};
-  if (tasksError) {
-    return <Box>Error fetching Tasks</Box>;
-  }
 
   return (
     <Flex flexDir="column" gap="8" padding="6">
@@ -160,11 +144,7 @@ export function TasksDemo() {
             </VStack>
           </ModalBody>
 
-          <ModalFooter>
-            {/* <Button width="30%" size="sm" colorScheme="green" onClick={createUser}>
-              Create Task
-            </Button> */}
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
       <Flex gap="4" flexWrap="wrap">
@@ -177,8 +157,7 @@ export function TasksDemo() {
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
                 <Button bgColor="white" size="xs" fontSize={'2xl'} onClick={onOpenEditing} key={task.id}>
-                  {/* ✎<Button size="sm" colorScheme="green" onClick={() => updateTask(task.id, task.name, task.description, task.deadline)}>
-                  Change Task (doesn't really do anything) */}
+                  ✎
                 </Button>
                 <Modal isOpen={isOpenEditing} onClose={onCloseEditing}>
                   <ModalOverlay />
@@ -243,7 +222,7 @@ export function TasksDemo() {
                     </ModalBody>
 
                     <ModalFooter>
-                      <Button width="30%" size="sm" colorScheme="green" onClick={EditTask}>
+                      <Button width="30%" size="sm" colorScheme="green" onClick={updateTask}>
                         Edit Task
                       </Button>
                     </ModalFooter>
