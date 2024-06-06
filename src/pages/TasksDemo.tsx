@@ -7,6 +7,7 @@ import { db } from '../../firebase.config';
 
 import { AddTaskButton } from '../components/AddTaskButton';
 import { UpdateTaskButton } from '../components/UpdateTaskButton';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export function TasksDemo() {
   const [tasks, tasksLoading, tasksError] = useFetchTaskList();
@@ -39,7 +40,7 @@ export function TasksDemo() {
               <HStack gap="4" mt="4">
                 <UpdateTaskButton task={task} />
                 <Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
-                  Delete Task
+                  <DeleteIcon />
                 </Button>
               </HStack>
             </Box>
