@@ -24,9 +24,9 @@ import { getAuth } from 'firebase/auth';
 import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { UpdateTaskButton } from 'src/components/UpdateTaskButton';
 
 import { db } from '../../firebase.config';
+import { UpdateTaskButton } from '../components/UpdateTaskButton';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 import { Task } from '../models/Task';
 
@@ -164,7 +164,7 @@ export function TasksDemo() {
           tasks.map((task: Task) => (
             <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={task.id}>
               <Heading>Name: {task.name}</Heading>
-              <Heading>Deadline: {task.deadline.toDate().toLocaleString()}</Heading>
+              <Heading>Deadline: {task.deadline?.toDate().toLocaleString()}</Heading>
               <Heading>Description: {task.description}</Heading>
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
@@ -187,7 +187,7 @@ export function TasksDemo() {
                           />
                           <Input
                             type="datetime-local"
-                            defaultValue={task.deadline.toDate().toISOString().slice(0, 16)}
+                            defaultValue={task.deadline?.toDate().toISOString().slice(0, 16)}
                             onChange={(event) => {
                               const date = new Date(event.target.value);
                               const timestamp = Timestamp.fromDate(date);
