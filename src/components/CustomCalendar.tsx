@@ -174,11 +174,6 @@ const CustomCalendar = () => {
           value={selectedDate}
           onChange={handleDateChange}
         />
-        {newDeadline && newDeadline.toDate && (
-          <Box>
-            Deadline: {newDeadline.toDate().toString()}
-          </Box>
-        )}
       </Box>
     );
   };
