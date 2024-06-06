@@ -1,6 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
 
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase.config';
 import { Task } from '../models/Task';
 
 interface CustomBoxProps {
@@ -11,7 +13,16 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
   const [isChecked, setIsChecked] = useState(task.status);
 
   const handleCheckboxChange = () => {
+    console.log(isChecked);
+    const taskDoc = doc(db, 'tasks', task.id);
     setIsChecked(!isChecked);
+
+    console.log(isChecked);
+    const newFields = {
+      status: isChecked
+    };
+    updateDoc(taskDoc, newFields);
+
   };
 
   const getBorderColor = () => {
@@ -23,7 +34,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
       case 3:
         return 'warning';
       default:
-        return 'red';
+        return 'background';
     }
   };
 
