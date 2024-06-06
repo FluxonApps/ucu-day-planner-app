@@ -67,6 +67,10 @@ export function TasksDemo() {
       status: true,
       userId: user?.uid,
     });
+    setNewName('');
+    setNewDeadline(null);
+    setNewDescription('');
+    setNewImportance(1);
   };
   const updateTask = async (
     id: string,
