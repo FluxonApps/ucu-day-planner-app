@@ -33,10 +33,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     setIsModalOpen(false);
   };
 
-
   const handleCheckboxChange = async () => {
-
-
 
     const taskDoc = doc(db, 'tasks', task.id);
 
@@ -51,7 +48,6 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
     setIsModalOpen(true);
   }
 
-
   const getBorderColor = () => {
     switch (task.importance) {
       case 1:
@@ -64,7 +60,6 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
         return 'background';
     }
   };
-
 
   return (
     <>
@@ -105,7 +100,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
           <ModalHeader>Update task</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <TaskForm onSubmit={handleUpdateTask} defaultValues={defaultFormValues} isUpdate={true} task={task} />
+            <TaskForm onSubmit={handleUpdateTask} defaultValues={defaultFormValues} isUpdate={true} taskId={task.id} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -2,11 +2,11 @@ import { Button, HStack, Heading, Input, Radio, RadioGroup, Stack } from '@chakr
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import CustomCalendar from './CustomCalendar';
+import { Textarea } from '@chakra-ui/react';
 
 import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../../firebase.config';
 
-import { Task } from '../models/Task'
 
 export interface TaskFormData {
   name: string;
@@ -19,10 +19,10 @@ interface ITaskForm {
   defaultValues?: TaskFormData;
   onSubmit: (newTask: TaskFormData) => void;
   isUpdate: boolean;
-  task: Task
+  taskId: string
 }
 
-export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm) {
+export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskForm) {
   const [name, setName] = useState(defaultValues?.name ?? '');
   const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
   const [description, setDescription] = useState(defaultValues?.description ?? '');
@@ -63,7 +63,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         bg="background"
         color="secondarytext"
       />
-      <Input
+      <Textarea
         placeholder="Description..."
         onChange={(event) => {
           setDescription(event.target.value);
@@ -110,7 +110,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         </Button>
 
         {isUpdate ?
-          < Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
+          < Button size="sm" colorScheme="red" onClick={() => deleteTask(taskId)}>
             <DeleteIcon />
           </Button>
           :
