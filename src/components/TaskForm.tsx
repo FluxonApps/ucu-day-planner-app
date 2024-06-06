@@ -1,6 +1,7 @@
 import { Button, HStack, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
+import CustomCalendar from './CustomCalendar';
 
 import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { db } from '../../firebase.config';
@@ -48,11 +49,9 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         bg="background"
         color="secondarytext"
       />
-      <Input
-        type="datetime-local"
-        onChange={(event) => {
-          const date = new Date(event.target.value);
-          const timestamp = Timestamp.fromDate(date);
+      <CustomCalendar
+        selectedDate={deadline ? deadline.toDate() : null}
+        onDateChange={(timestamp) => {
           setDeadline(timestamp);
         }}
         value={deadline?.toDate().toLocaleString()}
