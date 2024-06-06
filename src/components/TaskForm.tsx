@@ -1,6 +1,7 @@
 import { Button, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import { Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
+import CustomCalendar from './CustomCalendar'; // adjust the import path as necessary
 
 export interface TaskFormData {
   name: string;
@@ -31,15 +32,11 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
         placeholder="Name of Task..."
         size="sm"
       />
-      <Input
-        type="datetime-local"
-        onChange={(event) => {
-          const date = new Date(event.target.value);
-          const timestamp = Timestamp.fromDate(date);
+      <CustomCalendar
+        selectedDate={deadline ? deadline.toDate() : new Date()}
+        onDateChange={(timestamp) => {
           setDeadline(timestamp);
         }}
-        value={deadline?.toDate().toLocaleString()}
-        size="sm"
       />
       <Input
         placeholder="Description..."
