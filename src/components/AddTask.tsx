@@ -8,7 +8,7 @@ import {
   ModalOverlay,
   ModalFooter,
 } from '@chakra-ui/react';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
 
 import { db } from '../../firebase.config';
@@ -19,13 +19,8 @@ const auth = getAuth();
 
 import { TaskFormData, TaskForm } from './TaskForm';
 
-export function TasksDemo() {
+export function AddTask() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [newName, setNewName] = useState('');
-  const [newDeadline, setNewDeadline] = useState<Timestamp | null>(null);
-  const [newDescription, setNewDescription] = useState('');
-  const [newImportance, setNewImportance] = useState(1);
 
   const [user] = useAuthState(auth);
 
@@ -41,10 +36,6 @@ export function TasksDemo() {
       status: true,
       userId: user?.uid,
     });
-    setNewName('');
-    setNewDeadline(null);
-    setNewDescription('');
-    setNewImportance(1);
 
     setIsModalOpen(false);
   };

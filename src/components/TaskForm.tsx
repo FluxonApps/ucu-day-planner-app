@@ -65,6 +65,10 @@ export function TaskForm({ onSubmit }: ITaskForm) {
         colorScheme="green"
         onClick={() => {
           onSubmit({ name, deadline, description, importance });
+          setName('');
+          setDeadline(null);
+          setDescription('');
+          setImportance(1);
         }}
       >
         Create Task

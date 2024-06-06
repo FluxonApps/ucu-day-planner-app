@@ -186,7 +186,7 @@ export function TasksDemo() {
                           />
                           <Input
                             type="datetime-local"
-                            defaultValue={task.deadline.toDate().toISOString().slice(0, 16)}
+                            defaultValue={task.deadline?.toDate().toISOString().slice(0, 16)}
                             onChange={(event) => {
                               const date = new Date(event.target.value);
                               const timestamp = Timestamp.fromDate(date);
