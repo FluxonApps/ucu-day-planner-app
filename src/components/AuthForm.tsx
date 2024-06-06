@@ -94,38 +94,40 @@ const AuthForm = () => {
 
   return (
     <MainLayout>
-      <Flex w="full" h="full" alignItems="center" justifyContent="space-between" >
-        <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth} >
-          <Stack spacing={4} w={500} rounded="md" p={8}>
-            <Text color="text" align="center" fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
-            <Input bg="white" borderRadius="15px" _focusVisible={{ borderWidth: "3px", borderColor: "text" }} placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
-            <Input
-              placeholder="Password"
-              type="password"
-              onChange={handlePasswordChange}
-              bg="white" _focusVisible={{ borderWidth: "3px", borderColor: "text" }}
-              borderRadius="15px"
-              value={password}
-              minLength={6}
-              required
-            />
-            <Button type="submit" bg="secondarytext" borderRadius="15px" color="background" _hover={{ bg: "background", color: "secondarytext", border: "2px", borderColor: "secondary", transform: "scale(1.02)" }} isDisabled={loading} isLoading={loading} >
-              {showSignIn ? "Login" : "Register"}
-            </Button>
-            <Button
-              mt={4}
-              fontSize="sm"
-              fontWeight="normal"
-              variant="link"
-              onClick={switchAuthMode}
-              isDisabled={loading}
-              color="text"
-            >
-              {showSignIn ? 'Create a new account?' : 'Already have an account?'}
-            </Button>
-          </Stack>
-        </Box>
-      </Flex>
+      <Box h="full" bg="highlight">
+        <Flex w="full" h="full" alignItems="center" justifyContent="space-between" >
+          <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth} >
+            <Stack spacing={4} w={500} rounded="md" p={8}>
+              <Text color="text" align="center" fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
+              <Input bg="white" borderRadius="15px" _focusVisible={{ borderWidth: "3px", borderColor: "text" }} placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
+              <Input
+                placeholder="Password"
+                type="password"
+                onChange={handlePasswordChange}
+                bg="white" _focusVisible={{ borderWidth: "3px", borderColor: "text" }}
+                borderRadius="15px"
+                value={password}
+                minLength={6}
+                required
+              />
+              <Button type="submit" bg="secondarytext" borderRadius="15px" color="background" _hover={{ bg: "background", color: "secondarytext", border: "2px", borderColor: "secondary", transform: "scale(1.02)" }} isDisabled={loading} isLoading={loading} >
+                {showSignIn ? "Login" : "Register"}
+              </Button>
+              <Button
+                mt={4}
+                fontSize="sm"
+                fontWeight="normal"
+                variant="link"
+                onClick={switchAuthMode}
+                isDisabled={loading}
+                color="text"
+              >
+                {showSignIn ? 'Create a new account?' : 'Already have an account?'}
+              </Button>
+            </Stack>
+          </Box>
+        </Flex>
+      </Box>
     </MainLayout >
   );
 };

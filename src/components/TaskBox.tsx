@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Box, Checkbox, Flex, Text } from '@chakra-ui/react';
+import { Box, Stack, Checkbox, Flex, Text } from '@chakra-ui/react';
+
 import { Task } from '../models/Task';
 
 interface CustomBoxProps {
@@ -9,18 +10,18 @@ interface CustomBoxProps {
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
   const [isChecked, setIsChecked] = useState(task.status);
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
   };
 
   const getBorderColor = () => {
     switch (task.importance) {
       case 1:
-        return 'red';
+        return 'background';
       case 2:
-        return 'yellow';
+        return 'rgba(68,83,80,0.5)';
       case 3:
-        return 'green';
+        return 'warning';
       default:
         return 'red';
     }
@@ -28,34 +29,37 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
 
   return (
     <Box
-      border="2px"
+      border="4px"
       borderColor={getBorderColor()}
-      borderRadius="15px"
+      borderRadius="30px"
       p="20px"
       width="500px"
       height="200px"
       margin="20px"
-      bg={task.status ? 'rgba(217, 217, 217, 0.5)' : '#D9D9D9'}
+      bg="background"
+      opacity={isChecked ? "50%" : "100%"}
       display="flex"
       alignItems="center"
       justifyContent="center"
     >
-      <Flex width="100%" alignItems="center" justifyContent="space-between">
-        <Box>
-          <Text
-            fontSize="24px"
-            color="black"
-            textDecoration={task.status ? 'line-through' : 'none'}
-          >
-            {task.name}
-          </Text>
-          <Text fontSize="18px" color="grey">
-            {task.deadline?.toDate().toLocaleString()}
-          </Text>
+      <Flex width="80%" alignItems="center" justifyContent="space-between">
+        <Box >
+          <Stack spacing="5">
+            <Text
+              fontSize="24px"
+              color="black"
+              textDecoration={isChecked ? 'line-through' : 'none'}
+            >
+              {task.name}
+            </Text>
+            <Text fontSize="18px" color="grey">
+              {task.deadline?.toDate().toLocaleString()}
+            </Text>
+          </Stack>
         </Box>
-        <Checkbox isChecked={task.status} onChange={handleCheckboxChange} />
+        <Checkbox colorScheme='green' size="lg" onChange={handleCheckboxChange} />
       </Flex>
-    </Box>
+    </Box >
   );
 };
 
