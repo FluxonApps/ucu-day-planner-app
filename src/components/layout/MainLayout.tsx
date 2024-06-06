@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { FC } from 'react';
 
 const MainLayout: FC<any> = ({ children }) => (
-  <Box h="full" bg="#C9ADA7">
+  <Box h="full" bg="secondary">
     {children}
   </Box>
 );

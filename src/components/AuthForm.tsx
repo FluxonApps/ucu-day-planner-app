@@ -109,7 +109,7 @@ const AuthForm = () => {
               minLength={6}
               required
             />
-            <Button type="submit" bg="text" borderRadius="15px" color="background" _hover={{ bg: "highlight", color: "text" }} isDisabled={loading} isLoading={loading} >
+            <Button type="submit" bg="secondarytext" borderRadius="15px" color="background" _hover={{ bg: "background", color: "secondarytext", border: "2px", borderColor: "secondary", transform: "scale(1.02)" }} isDisabled={loading} isLoading={loading} >
               {showSignIn ? "Login" : "Register"}
             </Button>
             <Button
