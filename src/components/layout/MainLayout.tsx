@@ -1,4 +1,4 @@
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex, Button, useTheme } from '@chakra-ui/react';
 import { FC, ReactNode } from 'react';
 import { getAuth } from 'firebase/auth';
 import { useSignOut } from 'react-firebase-hooks/auth';
@@ -10,14 +10,15 @@ interface MainLayoutProps {
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const auth = getAuth();
   const [signOut, isSigningOut] = useSignOut(auth);
+  const theme = useTheme();
 
   return (
-    <Box minHeight="100vh" bg="blue.700">
+    <Box minHeight="100vh" bg={theme.colors.secondary}>
       <Flex
         align="center"
         justify="space-between"
         p={4}
-        bg="blue.500"
+        bg={theme.colors.highlight}
         color="white"
         position="fixed"
         top={0}
