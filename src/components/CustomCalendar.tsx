@@ -134,7 +134,7 @@ export const DatePicker: FC<DatePickerProps> = ({ value, onChange }) => {
           popperClassName={css({ marginTop: '4px!important' })}
           calendarClassName={css(styles)}
           selected={value}
-          onChange={date =>
+          onChange={(date: Date | (Date | null)[] | null) =>
             Array.isArray(date) ? onChange(date[0]) : onChange(date)
           }
           customInput={<CustomInput />}
@@ -158,19 +158,27 @@ const CustomCalendar = () => {
     const [newDeadline, setNewDeadline] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
   
-    const handleDateChange = (date) => {
+    const handleDateChange = (date: React.SetStateAction<Date>) => {
       setSelectedDate(date);
       const timestamp = date ? Timestamp.fromDate(date) : null;
-    //   console.log(date)
-    //   console.log(timestamp)
+      console.log(date)
+      console.log(timestamp)
 
       setNewDeadline(timestamp);
       console.log(newDeadline)
     };
   
     return (
-      <Box p={4}>
-        <DatePicker value={selectedDate} onChange={handleDateChange} />
+        <Box p={4}>
+        <DatePicker
+          value={selectedDate}
+          onChange={handleDateChange}
+        />
+        {newDeadline && newDeadline.toDate && (
+          <Box>
+            Deadline: {newDeadline.toDate().toString()}
+          </Box>
+        )}
       </Box>
     );
   };

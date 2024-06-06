@@ -1,4 +1,4 @@
-import CustomCalendar from "../components/DataPicker";
+import CustomCalendar from "../components/CustomCalendar";
 
 export function CalendarDemo() {
     return (
