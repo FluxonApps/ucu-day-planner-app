@@ -16,25 +16,11 @@ export function TaskList() {
   }
 
   return (
-    <>
-      {/* Start: this should be deleted whenever you're comfortable */}
-      <Stack spacing={4} justifyContent="center" alignItems="center" h="full">
-        <Text color="white">UCU x Fluxon Product Development Bootcamp</Text>
-        <HStack mt={4} color="blue.100">
-          <Link href="/firebase-demo">Firebase demo</Link>
-          <Text>|</Text>
-          <Link href="/auth">Authenticate</Link>
-          <Text>|</Text>
-          <Link href="/tasks">Tasks</Link>
-        </HStack>
-      </Stack>
-      {/* End: this should be deleted whenever you're comfortable */}
 
-      <Box bg={'blue.700'}>
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={3} mx={{ base: 4, md: 20 }}>
-          {tasks?.map((task) => <TaskBox task={task} key={task.id}></TaskBox>)}
-        </SimpleGrid>
-      </Box>
-    </>
+    <Box h="full" bg="secondary" alignItems="left">
+      <SimpleGrid columns={[1, 2, 3]} spacing="1%" padding="1%" >
+        {tasks?.map((task) => <TaskBox task={task} key={task.id}></TaskBox>)}
+      </SimpleGrid>
+    </Box>
   );
 }
