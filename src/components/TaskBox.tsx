@@ -11,13 +11,13 @@ interface CustomBoxProps {
 
 const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange = async () => {
     const taskDoc = doc(db, 'tasks', task.id);
 
     const newFields = {
       status: !task.status
     };
-    updateDoc(taskDoc, newFields);
+    await updateDoc(taskDoc, newFields);
 
   };
 
