@@ -33,9 +33,8 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
       borderColor={getBorderColor()}
       borderRadius="30px"
       p="20px"
-      width="500px"
+      width="100%"
       height="200px"
-      margin="20px"
       bg="background"
       opacity={isChecked ? "50%" : "100%"}
       display="flex"

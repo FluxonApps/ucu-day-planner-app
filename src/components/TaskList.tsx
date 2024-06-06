@@ -17,8 +17,8 @@ export function TaskList() {
 
   return (
 
-    <Box h="full" bg="secondary">
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={3} mx={{ base: 4, md: 20 }}>
+    <Box h="full" bg="secondary" alignItems="left">
+      <SimpleGrid columns={[1, 2, 3]} spacing="1%" padding="1%" >
         {tasks?.map((task) => <TaskBox task={task} key={task.id}></TaskBox>)}
       </SimpleGrid>
     </Box>
