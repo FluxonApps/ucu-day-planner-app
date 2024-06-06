@@ -1,4 +1,5 @@
 import { HStack, Box, Img, Link, Stack, Text } from '@chakra-ui/react';
+import TaskBox from './TaskBox';
 
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
