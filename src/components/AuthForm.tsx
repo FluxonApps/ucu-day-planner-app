@@ -11,8 +11,6 @@ import { Navigate } from 'react-router-dom';
 
 import { db } from '../../firebase.config.ts';
 
-import MainLayout from './layout/MainLayout.tsx';
-
 const auth = getAuth();
 
 const AuthForm = () => {
@@ -93,7 +91,7 @@ const AuthForm = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <Flex w="full" h="full" alignItems="center" justifyContent="space-between">
         <Box mx="auto" as="form" onSubmit={handleAuth}>
           <Stack spacing={4} w={500} bg="white" rounded="md" p={8}>
@@ -123,7 +121,7 @@ const AuthForm = () => {
           </Stack>
         </Box>
       </Flex>
-    </MainLayout>
+    </>
   );
 };
 

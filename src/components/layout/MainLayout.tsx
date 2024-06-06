@@ -1,34 +1,38 @@
-// MainLayout.tsx
-import { Box, Flex, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Button } from '@chakra-ui/react';
 import { FC, ReactNode } from 'react';
+import { getAuth } from 'firebase/auth';
+import { useSignOut } from 'react-firebase-hooks/auth';
 
 interface MainLayoutProps {
   children: ReactNode;
-  headerContent?: ReactNode;
 }
 
-const MainLayout: FC<MainLayoutProps> = ({ children, headerContent }) => (
-  // <Box h="full" bg="radial-gradient(at left top, #050311 20%, #2A53C7 100%)">
-  <Box minHeight="100vh" bg = "blue.700">
-    <Flex
-      align="center"
-      justify="space-between"
-      p={4}
-      bg="blue.500"
-      color="white"
-      position="fixed"
-      top={0}
-      left={0}
-      right={0}
-      zIndex={999}
-      width="100%"
-    >
-      {headerContent}
-    </Flex>
-    <Box pt={16}>
-      {children}
+const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  const auth = getAuth();
+  const [signOut, isSigningOut] = useSignOut(auth);
+
+  return (
+    <Box minHeight="100vh" bg="blue.700">
+      <Flex
+        align="center"
+        justify="space-between"
+        p={4}
+        bg="blue.500"
+        color="white"
+        position="fixed"
+        top={0}
+        left={0}
+        right={0}
+        zIndex={999}
+        width="100%"
+      >
+        <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
+          Sign out
+        </Button>
+      </Flex>
+      <Box pt={16}>{children}</Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 export default MainLayout;

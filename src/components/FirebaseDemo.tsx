@@ -1,11 +1,9 @@
-import { Box, Button, Flex, Heading, Input, Stack, HStack, Spinner } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Input, Stack, HStack, Spinner, Center } from '@chakra-ui/react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
 import { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '../../firebase.config';
-
-import MainLayout from './layout/MainLayout.tsx';
 
 interface User {
   id: string;
@@ -36,7 +34,11 @@ export function FirebaseDemo() {
   };
 
   if (usersLoading) {
-    return <Spinner />;
+    return (
+      <Center h="100vh">
+        <Spinner />
+      </Center>
+    );
   }
 
   if (usersError) {
@@ -44,7 +46,7 @@ export function FirebaseDemo() {
   }
 
   return (
-    <MainLayout>
+    <>
       <Flex flexDir="column" gap="8" padding="6">
         <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="20%" px="6" py="8">
           <Stack spacing="3">
@@ -86,7 +88,7 @@ export function FirebaseDemo() {
             ))}
         </Flex>
       </Flex>
-    </MainLayout>
+    </>
   );
 }
 

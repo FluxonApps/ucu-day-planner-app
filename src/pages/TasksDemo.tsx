@@ -1,5 +1,15 @@
 import { Box, Button, Flex, Heading, Input, Stack, HStack, Spinner } from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, Timestamp, DocumentReference } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  CollectionReference,
+  Timestamp,
+  DocumentReference,
+} from 'firebase/firestore';
 import { useState } from 'react';
 import { Task } from '../models/Task';
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
@@ -7,8 +17,6 @@ import { useFetchTaskList } from '../hooks/useFetchTaskList';
 import { db } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import MainLayout from '../components/layout/MainLayout';
-
 
 const auth = getAuth();
 
@@ -20,9 +28,7 @@ export function TasksDemo() {
 
   const [user] = useAuthState(auth);
 
-
   const [tasks, tasksLoading, tasksError] = useFetchTaskList();
-
 
   if (tasksLoading) {
     return <Spinner />;
@@ -35,9 +41,22 @@ export function TasksDemo() {
   const tasksCollectionRef = collection(db, 'tasks');
 
   const createTask = async () => {
-    await addDoc(tasksCollectionRef, { name: String(newTask), deadline: newDeadline, description: newDescription, activated: true, importance: Number(newImportance), status: true, userId: user?.uid });
+    await addDoc(tasksCollectionRef, {
+      name: String(newTask),
+      deadline: newDeadline,
+      description: newDescription,
+      activated: true,
+      importance: Number(newImportance),
+      status: true,
+      userId: user?.uid,
+    });
   };
-  const updateTask = async (id: string, updatedName: string, updatedDescription: string, updatedDeadline: Timestamp) => {
+  const updateTask = async (
+    id: string,
+    updatedName: string,
+    updatedDescription: string,
+    updatedDeadline: Timestamp,
+  ) => {
     const taskDoc = doc(db, 'tasks', id);
     const newFields = { name: updatedName, description: updatedDescription, deadline: updatedDeadline };
     await updateDoc(taskDoc, newFields);
@@ -47,9 +66,8 @@ export function TasksDemo() {
     await deleteDoc(taskDoc);
   };
 
-
   return (
-    <MainLayout>
+    <>
       <Flex flexDir="column" gap="8" padding="6">
         <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="20%" px="6" py="8">
           <Stack spacing="3">
@@ -77,7 +95,7 @@ export function TasksDemo() {
               size="sm"
             />
             <Input
-              type='number'
+              type="number"
               placeholder="Importance..."
               onChange={(event) => {
                 setNewImportance(Number(event.target.value));
@@ -98,7 +116,11 @@ export function TasksDemo() {
                 <Heading>Description: {task.description}</Heading>
                 <Heading>Importance: {task.importance}</Heading>
                 <HStack gap="4" mt="4">
-                  <Button size="sm" colorScheme="green" onClick={() => updateTask(task.id, task.name, task.description, task.deadline)}>
+                  <Button
+                    size="sm"
+                    colorScheme="green"
+                    onClick={() => updateTask(task.id, task.name, task.description, task.deadline)}
+                  >
                     Change Task (doesn't really do anything)
                   </Button>
                   <Button size="sm" colorScheme="red" onClick={() => deleteTask(task.id)}>
@@ -109,6 +131,6 @@ export function TasksDemo() {
             ))}
         </Flex>
       </Flex>
-    </MainLayout>
+    </>
   );
 }
