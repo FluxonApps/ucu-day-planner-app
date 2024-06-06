@@ -19,6 +19,8 @@ import {
   Editable,
   EditablePreview,
   EditableInput,
+  Radio,
+  RadioGroup,
 } from '@chakra-ui/react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
@@ -36,7 +38,7 @@ export function TasksDemo() {
   const [newTask, setNewName] = useState('');
   const [newDeadline, setNewDeadline] = useState<Timestamp | null>(null);
   const [newDescription, setNewDescription] = useState('');
-  const [newImportance, setNewImportance] = useState(0);
+  const [newImportance, setNewImportance] = useState(1);
 
   const [user] = useAuthState(auth);
 
@@ -120,14 +122,20 @@ export function TasksDemo() {
                   }}
                   size="sm"
                 />
-                <Input
-                  type="number"
-                  placeholder="Importance..."
-                  onChange={(event) => {
-                    setNewImportance(Number(event.target.value));
+                <Heading fontSize={20}>Choose the level of importance</Heading>
+                <RadioGroup
+                  onChange={(value) => {
+                    setNewImportance(Number(value));
                   }}
                   size="sm"
-                />
+                  defaultValue="1"
+                >
+                  <Stack direction="row">
+                    <Radio value="1">Low</Radio>
+                    <Radio value="2">Medium</Radio>
+                    <Radio value="3">High</Radio>
+                  </Stack>
+                </RadioGroup>
               </Stack>
 
               <Button
