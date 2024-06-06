@@ -41,6 +41,12 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         value={name}
         placeholder="Name of Task..."
         size="sm"
+        borderRadius="15"
+        borderWidth="3"
+        borderColor="highlight"
+        _focusVisible={{ borderWidth: '3px', borderColor: 'secondarytext' }}
+        bg="background"
+        color="secondarytext"
       />
       <Input
         type="datetime-local"
@@ -51,6 +57,12 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         }}
         value={deadline?.toDate().toLocaleString()}
         size="sm"
+        borderRadius="15"
+        borderWidth="3"
+        borderColor="highlight"
+        _focusVisible={{ borderWidth: '3px', borderColor: 'secondarytext' }}
+        bg="background"
+        color="secondarytext"
       />
       <Input
         placeholder="Description..."
@@ -59,6 +71,12 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         }}
         value={description}
         size="sm"
+        borderRadius="15"
+        borderWidth="3"
+        borderColor="highlight"
+        _focusVisible={{ borderWidth: '3px', borderColor: 'secondarytext' }}
+        bg="background"
+        color="secondarytext"
       />
       <Heading fontSize={20}>Choose the level of importance</Heading>
       <RadioGroup
@@ -78,6 +96,8 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, task }: ITaskForm)
         <Button
           width="50%"
           size="sm"
+          bg="secondarytext"
+          _hover={{ bg: "secondary", color: "secondarytext" }}
           colorScheme="green"
           onClick={() => {
             onSubmit({ name, deadline, description, importance });
