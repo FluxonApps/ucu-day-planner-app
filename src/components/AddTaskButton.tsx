@@ -1,57 +1,61 @@
 import {
-  Box,
   Button,
-  Flex,
-  Heading,
-  Input,
-  Stack,
-  HStack,
-  Spinner,
-  ModalFooter,
   ModalBody,
   ModalContent,
   Modal,
   ModalHeader,
   ModalCloseButton,
   ModalOverlay,
-  useDisclosure,
-  VStack,
-  Radio,
-  RadioGroup,
+  ModalFooter,
 } from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
-import { Task } from '../models/Task';
-import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
 import { db } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const auth = getAuth();
 import { AddIcon } from '@chakra-ui/icons';
+
+const auth = getAuth();
 
 import { TaskFormData, TaskForm } from './TaskForm';
 
-export function UpdateTask() {
+export function AddTaskButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Declaring adding task business logic here
-  const handleUpdateTask = (newTask: TaskFormData) => {
-    // save an updated task to Firestore
+
+  const [user] = useAuthState(auth);
+
+  const tasksCollectionRef = collection(db, 'tasks');
+
+  const handleAddTask = async (newTask: TaskFormData) => {
+    await addDoc(tasksCollectionRef, {
+      name: newTask.name,
+      deadline: newTask.deadline,
+      description: newTask.description,
+      activated: true,
+      importance: Number(newTask.importance),
+      status: true,
+      userId: user?.uid,
+    });
+
     setIsModalOpen(false);
   };
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>Pencil icon</Button>
+      <Button onClick={() => setIsModalOpen(true)}>
+        <AddIcon />
+      </Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add new task</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <TaskForm onSubmit={handleUodateTask} />
+            <TaskForm onSubmit={handleAddTask} isUpdate={false} />
           </ModalBody>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
