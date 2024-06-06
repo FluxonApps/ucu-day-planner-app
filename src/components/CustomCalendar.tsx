@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Timestamp } from 'firebase/firestore';
 import { DatePicker } from './DatePicker';
+import { Button, Stack } from '@chakra-ui/react';
 
 const CustomCalendar = ({ selectedDate, onDateChange }) => {
   const [internalDate, setInternalDate] = useState(selectedDate ? new Date(selectedDate) : null);
@@ -15,11 +16,21 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
     onDateChange(timestamp);
   };
 
+  const handleClearDate = () => {
+    setInternalDate(null);
+    onDateChange(null);
+  };
+
   return (
-    <DatePicker
-      value={internalDate}
-      onChange={handleDateChange}
-    />
+    <Stack direction="row" align="center">
+      <DatePicker
+        value={internalDate}
+        onChange={handleDateChange}
+      />
+      <Button onClick={handleClearDate} size="sm" colorScheme="red">
+        Clear
+      </Button>
+    </Stack>
   );
 };
 

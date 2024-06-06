@@ -33,7 +33,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate }: ITaskForm) {
         size="sm"
       />
       <CustomCalendar
-        selectedDate={deadline ? deadline.toDate() : new Date()}
+        selectedDate={deadline ? deadline.toDate() : null}
         onDateChange={(timestamp) => {
           setDeadline(timestamp);
         }}
