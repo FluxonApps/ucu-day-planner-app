@@ -3,7 +3,6 @@ import { HStack, Box, Img, Link, Stack, Text, SimpleGrid, Spinner } from '@chakr
 
 import { useFetchTaskList } from '../hooks/useFetchTaskList';
 
-
 export function TaskList() {
   const [tasks, loading, error] = useFetchTaskList();
 
