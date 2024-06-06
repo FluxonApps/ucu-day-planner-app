@@ -29,7 +29,7 @@ import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const auth = getAuth();
-import { AddIcon } from '@chakra-ui/icons';
+import { BsPencilFill, BsPlusLg } from 'react-icons/bs';
 
 export function TasksDemo() {
   const [newTask, setNewName] = useState('');
@@ -88,7 +88,7 @@ export function TasksDemo() {
     <Flex flexDir="column" gap="8" padding="6">
       <Box textAlign={'right'}>
         <Button bg="gainsboro" onClick={onOpenCreating}>
-          {<AddIcon />}
+          {<BsPlusLg />}
         </Button>
       </Box>
       <Modal isOpen={isOpenCreating} onClose={onCloseCreating}>
@@ -166,7 +166,7 @@ export function TasksDemo() {
               <Heading>Importance: {task.importance}</Heading>
               <HStack gap="4" mt="4">
                 <Button bgColor="white" size="xs" fontSize={'2xl'} onClick={onOpenEditing} key={task.id}>
-                  ✎
+                  <BsPencilFill />
                 </Button>
                 <Modal isOpen={isOpenEditing} onClose={onCloseEditing}>
                   <ModalOverlay />

@@ -15,6 +15,8 @@ import { db } from '../../firebase.config';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+import { BsPlusLg } from 'react-icons/bs';
+
 const auth = getAuth();
 
 import { TaskFormData, TaskForm } from './TaskForm';
@@ -42,7 +44,9 @@ export function AddTask() {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>+</Button>
+      <Button onClick={() => setIsModalOpen(true)}>
+        <BsPlusLg />
+      </Button>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
