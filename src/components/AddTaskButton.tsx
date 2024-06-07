@@ -55,7 +55,6 @@ export function AddTaskButton() {
           <ModalBody>
             <TaskForm onSubmit={handleAddTask} isUpdate={false} />
           </ModalBody>
-          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>

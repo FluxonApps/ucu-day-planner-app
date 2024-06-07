@@ -1,5 +1,17 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Button, HStack, Heading, Input, Radio, RadioGroup, Stack, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  HStack,
+  Heading,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  useToast,
+  ModalFooter,
+  Spacer,
+  Flex,
+} from '@chakra-ui/react';
 import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import CustomCalendar from './CustomCalendar';
@@ -42,7 +54,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
         }}
         value={name}
         placeholder="Name of Task..."
-        size="sm"
+        size="md"
         borderRadius="15"
         borderWidth="3"
         borderColor="highlight"
@@ -120,14 +132,14 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
           {taskId ? 'Update' : 'Add'}
         </Button>
 
+        <Spacer />
         {taskId ? (
           <Button size="sm" colorScheme="red" onClick={() => deleteTask(taskId)}>
             <DeleteIcon />
           </Button>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </HStack>
+      <ModalFooter></ModalFooter>
     </Stack>
   );
 }
