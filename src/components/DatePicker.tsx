@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, useCallback, useMemo } from 'react';
+import { FC, forwardRef, useCallback, useMemo } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactDatePicker from 'react-datepicker';
 import {
@@ -10,20 +10,16 @@ import {
   StyleObjectOrFn,
   Text,
   useTheme,
-  Button,
   css as chakraCSS,
 } from '@chakra-ui/react';
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { ClassNames } from '@emotion/react';
 
 const CustomInput = forwardRef<any, any>((props, ref) => {
   return (
     <InputGroup>
-      <Input {...props}
+      <Input
+        {...props}
         ref={ref}
         backgroundColor="white"
         borderRadius="15"
@@ -34,11 +30,7 @@ const CustomInput = forwardRef<any, any>((props, ref) => {
         color="secondarytext"
       />
 
-      <InputRightElement
-        userSelect="none"
-        pointerEvents="none"
-        children={<CalendarIcon />}
-      />
+      <InputRightElement userSelect="none" pointerEvents="none" children={<CalendarIcon />} />
     </InputGroup>
   );
 });
@@ -170,7 +162,7 @@ export const DatePicker: FC<DatePickerProps> = ({ value, onChange, onClear }) =>
         </div>
       );
     },
-    [styles, value, onChange, onClear]
+    [styles, value, onChange, onClear],
   );
 
   return <ClassNames>{render}</ClassNames>;

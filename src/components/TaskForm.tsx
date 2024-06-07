@@ -10,7 +10,6 @@ import {
   useToast,
   ModalFooter,
   Spacer,
-  Flex,
 } from '@chakra-ui/react';
 import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
