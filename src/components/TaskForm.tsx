@@ -60,6 +60,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
         _focusVisible={{ borderWidth: '3px', borderColor: 'secondarytext' }}
         bg="background"
         color="secondarytext"
+        maxLength={50}
       />
       <CustomCalendar
         selectedDate={deadline ? deadline.toDate() : null}
