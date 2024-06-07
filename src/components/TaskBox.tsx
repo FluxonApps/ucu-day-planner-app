@@ -1,4 +1,3 @@
-import { updateDoc, doc, Timestamp } from 'firebase/firestore';
 import {
   ModalBody,
   ModalContent,
@@ -12,6 +11,7 @@ import {
   Flex,
   Text,
 } from '@chakra-ui/react';
+import { updateDoc, doc, Timestamp } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 import { db } from '../../firebase.config';
@@ -94,10 +94,12 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
         display="flex"
         alignItems="center"
         justifyContent="center"
+        paddingLeft={{ base: '5', md: '10', xl: '20' }}
+        paddingRight={{ base: '5', md: '10', xl: '20' }}
       >
         <Flex width="100%" height="100%" alignItems="center" justifyContent="space-between" onClick={handleBoxClick}>
           <Box>
-            <Stack spacing="5" paddingLeft="20">
+            <Stack spacing="5">
               <Text fontSize="24px" color="black" textDecoration={task.status ? 'line-through' : 'none'}>
                 {task.name}
               </Text>
@@ -111,13 +113,7 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
             </Stack>
           </Box>
         </Flex>
-        <Checkbox
-          colorScheme="green"
-          size="lg"
-          isChecked={task.status}
-          onChange={handleCheckboxChange}
-          paddingRight="20"
-        />
+        <Checkbox colorScheme="green" size="lg" isChecked={task.status} onChange={handleCheckboxChange} />
       </Box>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
