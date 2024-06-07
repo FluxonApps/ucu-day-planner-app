@@ -35,7 +35,7 @@ export function AddTaskButton() {
       description: newTask.description,
       activated: true,
       importance: Number(newTask.importance),
-      status: true,
+      status: false,
       userId: user?.uid,
     });
 

@@ -23,7 +23,17 @@ import { ClassNames } from '@emotion/react';
 const CustomInput = forwardRef<any, any>((props, ref) => {
   return (
     <InputGroup>
-      <Input {...props} ref={ref} backgroundColor="white" />
+      <Input {...props}
+        ref={ref}
+        backgroundColor="white"
+        borderRadius="15"
+        borderWidth="3"
+        borderColor="highlight"
+        _focusVisible={{ borderWidth: '3px', borderColor: 'secondarytext' }}
+        bg="background"
+        color="secondarytext"
+      />
+
       <InputRightElement
         userSelect="none"
         pointerEvents="none"

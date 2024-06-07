@@ -27,7 +27,7 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
         value={internalDate}
         onChange={handleDateChange}
       />
-      <Button onClick={handleClearDate} size="sm" colorScheme="red">
+      <Button onClick={handleClearDate} size="sm" bg="secondarytext" color="white" _hover={{ bg: "secondary", color: "secondarytext" }}>
         Clear
       </Button>
     </Stack>
