@@ -129,3 +129,4 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
   );
 };
 
+export default TaskBox;
