@@ -1,10 +1,16 @@
-# Fluxon x UCU Summer School project template `🤓`
+- [Fluxon x UCU Summer School day planner application `🤓`](#fluxon-x-ucu-summer-school-day-planner-application-)
+  - [1. Technologies used:](#1-technologies-used)
+  - [2. Local development](#2-local-development)
+  - [3. Usage](#3-usage)
+    - [3.1 Register/Login](#31-registerlogin)
+    - [3.2 Blank page](#32-blank-page)
+    - [3.3 Let's create a task](#33-lets-create-a-task)
+    - [3.4 Update/check out](#34-updatecheck-out)
+  - [⭐ Credits](#-credits)
 
-Oh boy... Welcome to the project repository, hope you are excited! This README file gives you some context on how to start your work on the project, guides you through the local development setup, and provides some useful materials to help you learn stuff we're using here.
+# Fluxon x UCU Summer School day planner application `🤓`
 
-^ 🚧 students, replace this paragraph with your project description once you are all set up! Make this document yours! 🚧
-
-Technologies used:
+## 1. Technologies used:
 
 - [React](https://react.dev/) - UI framework/library
 - [TypeScript](https://www.typescriptlang.org/) - strict types for JavaScript
@@ -12,7 +18,7 @@ Technologies used:
 - [Chakra UI](https://chakra-ui.com/) - UI component library
 - [Vite](https://vitejs.dev/) - thing that bundles all the above together. A tool that takes all the source code files and bundles them together to build the app 🛠️
 
-## Local development
+## 2. Local development
 
 This bulleted list will help you set up your machine for local development.
 
@@ -35,36 +41,38 @@ This bulleted list will help you set up your machine for local development.
 1. Make changes to files within the src/ folder to see them reflected on the page
 1. You should be all set! Now you can start contributing to the project! 🤘
 
-## Deployment
+## 3. Usage
 
-TODO: Fill in this section.
+### 3.1 Register/Login
+<center><img src="./assets/2024-06-07T11:55:12,291424170+03:00.png" width=85%></center>
+Input your email and password to login/register. 
 
-## USEFUL MATERIALS
+### 3.2 Blank page
+<center><img src="./assets/2024-06-07T11:56:48,979906306+03:00.png" width=85%></center>
+After that you will be redirected to the page with tasks list.
 
-> Before you proceed with this section, yet another reminder: there is no such thing as a stupid or lame question. If you're feeling like you don't know something, this means there's room for improvement – just say it out loud and your mentor or peers will help you! We're all here to learn something new ([even mentors!](https://github.com/FluxonApps/ucu-summer-school-project-template/assets/86969397/73f4948e-fb0d-4dc8-b43d-b9859acf0612)), so let's have fun learning together!!!
+### 3.3 Let's create a task
+<center><img src="./assets/2024-06-07T11:58:37,017303955+03:00.png" width=85%></center>
+<center><img src="./assets/2024-06-07T11:59:58,122303442+03:00.png" width=85%></center>
+Let's add some task. To do that you have to click 'plus' button in the top-right corner and specify a name, a description and an importance. Deadline is optional.
 
-> No, seriously, if there's anything, no matter however """obvious""" this thing feels to you, don't be shy asking about it. Or we'll be after you when the Summer School is over 🥷
+### 3.4 Update/check out
+<center><img src="./assets/2024-06-07T12:03:13,722801824+03:00.png" width=85%></center>
+<center><img src="./assets/2024-06-07T12:04:03,367423473+03:00.png" width=85%></center>
+To mark task as done simply click on the checkbox. If you want to change task's info click on its box and do needed changes. Here you can also delete a task.
 
-[React.js official guide](https://react.dev/learn)
 
-[React.js cheat sheet](https://devhints.io/react) - we're mostly interested in "Other components", "Hooks", and "JSX patterns" sections.
+## ⭐ Credits
+[Danny Matkovsky](https://github.com/dannymatkovsky)
 
-[Firebase official guide](https://firebase.google.com/docs/web/setup)
+[Artur Rudish](https://github.com/garudaenjoyer)
 
-[Git cheat sheet](https://training.github.com/downloads/github-git-cheat-sheet.pdf)
+[Vladislav Sidorak](https://github.com/Vladick102)
 
-### Web Basics
+[Jaremy Tebenko](https://github.com/gruvert)
 
-We've also got some basics for you – it's never late to learn them!
+[Iryna Kyrylova](https://github.com/hhafiya)
 
-[HTML & CSS guide](https://internetingishard.netlify.app/) - a well-rounded guide on how webpages work
+[Orest Chupa](https://github.com/ratatuiii)
 
-JavaScript guides:
-
-- https://www.geeksforgeeks.org/introduction-to-javascript/
-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction
-- ask a mentor for JS introduction and other materials
-
-The above list is incomplete, so if you need anything - you know [whom](https://github.com/FluxonApps/ucu-summer-school-project-template/assets/86969397/f93ff07b-f70e-476d-9ed5-14f25d474a53) to ask 😊
-
-Good luck!
+[Valihurskyi Anton](https://github.com/BlueSkyAndSomeCurses)
