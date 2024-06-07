@@ -1,5 +1,17 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Button, HStack, Heading, Input, Radio, RadioGroup, Stack } from '@chakra-ui/react';
+import {
+  Button,
+  HStack,
+  Heading,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  useToast,
+  ModalFooter,
+  Spacer,
+  Flex,
+} from '@chakra-ui/react';
 import { deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import CustomCalendar from './CustomCalendar';
@@ -18,15 +30,16 @@ interface ITaskForm {
   defaultValues?: TaskFormData;
   onSubmit: (newTask: TaskFormData) => void;
   isUpdate: boolean;
-  taskId: string
+  taskId: string;
 }
 
 export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskForm) {
-
   const [name, setName] = useState(defaultValues?.name ?? '');
   const [deadline, setDeadline] = useState<Timestamp | null>(defaultValues?.deadline ?? null);
   const [description, setDescription] = useState(defaultValues?.description ?? '');
   const [importance, setImportance] = useState(defaultValues?.importance ?? 1);
+
+  const toast = useToast();
 
   const deleteTask = async (id: string) => {
     const taskDoc = doc(db, 'tasks', id);
@@ -41,7 +54,7 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
         }}
         value={name}
         placeholder="Name of Task..."
-        size="sm"
+        size="md"
         borderRadius="15"
         borderWidth="3"
         borderColor="highlight"
@@ -99,6 +112,16 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
           _hover={{ bg: 'secondary', color: 'secondarytext' }}
           colorScheme="green"
           onClick={() => {
+            if (!name) {
+              toast({
+                title: 'Error',
+                description: 'Name is required',
+                status: 'error',
+                duration: 900,
+                isClosable: true,
+              });
+              return;
+            }
             onSubmit({ name, deadline, description, importance });
             setName('');
             setDeadline(null);
@@ -109,14 +132,14 @@ export function TaskForm({ onSubmit, defaultValues, isUpdate, taskId }: ITaskFor
           {taskId ? 'Update' : 'Add'}
         </Button>
 
+        <Spacer />
         {taskId ? (
           <Button size="sm" colorScheme="red" onClick={() => deleteTask(taskId)}>
             <DeleteIcon />
           </Button>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </HStack>
-    </Stack >
+      <ModalFooter></ModalFooter>
+    </Stack>
   );
 }

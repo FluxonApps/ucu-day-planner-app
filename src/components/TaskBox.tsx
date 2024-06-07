@@ -101,7 +101,11 @@ const TaskBox: React.FC<CustomBoxProps> = ({ task }) => {
               <Text fontSize="24px" color="black" textDecoration={task.status ? 'line-through' : 'none'}>
                 {task.name}
               </Text>
-              <Text fontSize="18px" color={Timestamp.fromDate(new Date()) > task.deadline ? "warning" : "grey"} decoration={Timestamp.fromDate(new Date()) > task.deadline ? "underline" : "none"}>
+              <Text
+                fontSize="18px"
+                color={Timestamp.fromDate(new Date()) > task.deadline ? 'warning' : 'grey'}
+                decoration={Timestamp.fromDate(new Date()) > task.deadline ? 'underline' : 'none'}
+              >
                 {task.deadline?.toDate().toLocaleString()}
               </Text>
             </Stack>

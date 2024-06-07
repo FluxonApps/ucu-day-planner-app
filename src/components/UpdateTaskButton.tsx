@@ -1,5 +1,14 @@
 import { EditIcon } from '@chakra-ui/icons';
-import { Button, ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay } from '@chakra-ui/react';
+import {
+  Button,
+  ModalBody,
+  ModalContent,
+  Modal,
+  ModalHeader,
+  ModalCloseButton,
+  ModalOverlay,
+  ModalFooter,
+} from '@chakra-ui/react';
 import { updateDoc, doc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -51,7 +60,7 @@ export function UpdateTaskButton({ task }: IUpdateTaskButton) {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add new task</ModalHeader>
+          <ModalHeader>Update Task</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <TaskForm onSubmit={handleUpdateTask} defaultValues={defaultFormValues} isUpdate={true} />

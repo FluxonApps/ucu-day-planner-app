@@ -21,7 +21,7 @@ const AuthForm = () => {
   const [createUserWithEmailAndPassword, , signUpLoading] = useCreateUserWithEmailAndPassword(auth);
   const loading = signInLoading || signUpLoading;
 
-  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
