@@ -1,13 +1,4 @@
-import {
-  Button,
-  ModalBody,
-  ModalContent,
-  Modal,
-  ModalHeader,
-  ModalCloseButton,
-  ModalOverlay,
-  ModalFooter,
-} from '@chakra-ui/react';
+import { Button, ModalBody, ModalContent, Modal, ModalHeader, ModalCloseButton, ModalOverlay } from '@chakra-ui/react';
 import { collection, addDoc } from 'firebase/firestore';
 import { useState } from 'react';
 
