@@ -93,8 +93,18 @@ const AuthForm = () => {
   return (
     <Box h="full" bg="highlight">
       <Flex w="full" h="full" alignItems="center" justifyContent="space-between">
-        <Box bg="background" borderRadius="50" mx="auto" as="form" onSubmit={handleAuth}>
-          <Stack spacing={4} w={500} rounded="md" p={8}>
+        <Box
+          bg="background"
+          borderRadius="50"
+          mx="auto"
+          as="form"
+          onSubmit={handleAuth}
+          w={{
+            base: '95%',
+            sm: 480,
+          }}
+        >
+          <Stack spacing={4} rounded="md" p={8}>
             <Text color="text" align="center" fontSize="2xl">
               {showSignIn ? 'Sign in' : 'Sign up'}
             </Text>
