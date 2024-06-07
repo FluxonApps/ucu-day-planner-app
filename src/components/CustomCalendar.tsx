@@ -23,12 +23,15 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
 
   return (
     <Stack direction="row" align="center">
-      <DatePicker
-        value={internalDate}
-        onChange={handleDateChange}
-      />
-      <Button onClick={handleClearDate} size="sm" bg="secondarytext" color="white" _hover={{ bg: "secondary", color: "secondarytext" }}>
-        Clear
+      <DatePicker value={internalDate} onChange={handleDateChange} />
+      <Button
+        onClick={handleClearDate}
+        size="sm"
+        bg="secondarytext"
+        color="white"
+        _hover={{ bg: 'secondary', color: 'secondarytext' }}
+      >
+        Clear Date
       </Button>
     </Stack>
   );
