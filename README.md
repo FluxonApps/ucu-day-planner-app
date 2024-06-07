@@ -67,7 +67,7 @@ To mark task as done simply click on the checkbox. If you want to change task's 
 
 [Artur Rudish](https://github.com/garudaenjoyer)
 
-[Vladislav Sidorak](https://github.com/Vladick102)
+[Vladyslav Sydorak](https://github.com/Vladick102)
 
 [Jaremy Tebenko](https://github.com/gruvert)
 
